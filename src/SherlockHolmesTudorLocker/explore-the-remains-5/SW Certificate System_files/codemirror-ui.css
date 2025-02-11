@@ -1,0 +1,159 @@
+.webbox {height:23px; background:#edeee5; margin:0 20px; padding-left:32px; position:relative; }
+.webbox span{ width:31px; height:23px; display:inline-block;background:url(../../imgs/web_bg.png) no-repeat top right;}
+.webbox .hide{display:none;}
+
+.webbox_full {height:23px; background:#edeee5; margin:0 20px; position:fixed; top:0; left:0; width:100%; }
+.webbox_full span{ width:31px; height:23px; display:inline-block;background:url(../../imgs/web_bg.png) no-repeat top right;}
+.webbox_full .hide{display:none;}
+
+.codemirror-ui-button-frame{
+/* 	border-top:1px solid #ccc; */
+/* 	border-left:1px solid #ccc; */
+/* 	border-right:1px solid #ccc; */
+/* 	background:#eee; */
+/* 	position:relative; */
+	height:23px;
+	background:#edeee5;
+/* 	margin:0 20px; */
+/* 	padding-left:32px; */
+/* 	position:relative; */
+}
+
+/* f00 */
+.codemirror-ui-find-bar input[type=checkbox]{margin-right:5px;  vertical-align:middle;} 	
+.codemirror-ui-find-bar label{padding:5px;vertical-align:middle;} 	
+.filein { vertical-align:middle; width:100px; height:18px; margin-top:-1px; border:1px solid #cdcdcd; } 	
+.btnsearch{font-size:12px; padding:2px 5px; color:#707070;  background:#e5e5e5; border:1px solid #999999;}
+
+
+input.codemirror-ui-checkbox{
+	width: 20px;
+/* 	vertical-align:middle; */
+}
+
+
+.codemirror-ui-button{
+/* 	display:block; */
+/* 	float:left; */
+/* 	padding:3px; */
+/* 	line-height:0; */
+/* 	margin:1px; */
+/* 	margin-right:0px; */
+	width:30px; 
+	height:23px; 
+	display:inline-block;
+	cursor:pointer;
+	float:left;	
+}
+
+.codemirror-ui-button:hover{
+/* 	padding:2px; */
+/* 	border:1px solid #ccc; */
+	width:30px; 
+	height:23px; 
+	display:inline-block;	
+}
+
+/* .codemirror-ui-button:hover .hide {display:block;position:absolute; top:23px; background:#fbd3db; border:1px solid #ec7186; padding:5px; border-radius:5px;} */
+
+.codemirror-ui-button img{
+	line-height:0;
+}
+
+.codemirror-ui-button.inactive{
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+	filter: alpha(opacity=50);
+	opacity: .5;
+}
+
+.codemirror-ui-wrap{
+	float:right;
+}
+
+.codemirror-find-replace{
+	border:1px solid black;
+	background : #ddd;
+	padding:10px;
+	position:absolute;
+	width:300px;
+	top:0%;
+	left:50%;
+	margin-left:-150px;
+}
+
+iframe{
+	/*border:1px solid green !important;*/
+}
+
+
+.codemirror-ui-popup-find-wrap .codemirror-ui-find-bar{
+	text-align:center;	
+	height:initial;
+	float:left;
+	margin-top:2px;
+}
+
+.codemirror-ui-popup-find-wrap{
+	bottom:100%;
+	left:0px;
+	background:#eee;
+	border-bottom:0px;
+	margin-bottom:0px;
+	display:none;
+	height:inherit;
+/* 	position: absolute; */
+	float: left;
+	padding-left: 30px;
+	padding-right: 10px;
+}
+
+.codemirror-ui-popup-find-wrap.active{
+	display:block;
+}
+
+.CodeMirror{
+	border:1px solid #ccc;
+	background:white;
+}
+
+/*
+ * This lets us make sure that the fancy-tab-gutter will always enclose the tabs inside it.
+ * We're namspcing it since many frameworks include a .clearfix rule of somesort.
+ */
+
+.codemirror-ui-clearfix:after {
+     visibility: hidden;
+     display: block;
+     font-size: 0;
+     content:"\0020";
+     clear: both;
+     height: 0;
+     }
+.codemirror-ui-clearfix { display: inline-block; }
+/* start commented backslash hack \*/
+* html .codemirror-ui-clearfix { height: 1%; }
+.codemirror-ui-clearfix { display: block; }
+/* close commented backslash hack */
+
+.mirror_search_off{width:30px; height:23px; display:inline-block; background:url(../images/web_search.png) no-repeat 0 0;cursor:pointer;}
+.mirror_next{width:30px; height:23px; display:inline-block; background:url(../images/web_next.png) no-repeat 0 0;cursor:pointer;}
+.mirror_pre{width:30px; height:23px; display:inline-block; background:url(../images/web_pre.png) no-repeat 0 0;cursor:pointer;}
+.mirror_change{width:30px; height:23px; display:inline-block; background:url(../images/web_change.png) no-repeat 0 0;cursor:pointer;}
+.mirror_all{width:30px; height:23px; display:inline-block; background:url(../images/web_all.png) no-repeat 0 0; cursor:pointer;}
+.mirror_full_off{width:30px; height:23px; display:inline-block; background:url(../images/web_full.png) no-repeat 0 0; cursor:pointer;}
+
+.mirror_search_on{width:30px; height:23px; display:inline-block; background:url(../images/web_search_off.png) no-repeat 0 0; cursor:pointer;}
+.mirror_search_off:hover{width:30px; height:23px; display:inline-block; background:url(../images/web_search_on.png) no-repeat 0 0; cursor:pointer;}
+.mirror_next:hover{width:30px; height:23px; display:inline-block; background:url(../images/web_next_on.png) no-repeat 0 0; cursor:pointer;}
+.mirror_pre:hover{width:30px; height:23px; display:inline-block; background:url(../images/web_pre_on.png) no-repeat 0 0; cursor:pointer;}
+.mirror_change:hover{width:30px; height:23px; display:inline-block; background:url(../images/web_change_on.png) no-repeat 0 0; cursor:pointer;}
+.mirror_all:hover{width:30px; height:23px; display:inline-block; background:url(../images/web_all_on.png) no-repeat 0 0; cursor:pointer;}
+.mirror_full_off:hover{width:30px; height:23px; display:inline-block; background:url(../images/web_full_on.png) no-repeat 0 0; cursor:pointer;}
+.mirror_full_on{width:30px; height:23px; display:inline-block; background:url(../images/web_full_off.png) no-repeat 0 0; cursor:pointer;}
+.mirror_search_off:hover .hide, .mirror_search_on:hover .hide, .mirror_next:hover .hide, .mirror_pre:hover .hide, .mirror_change:hover .hide, .mirror_all:hover .hide, .mirror_full_off:hover .hide, .mirror_full_on:hover .hide {display:block;position:absolute; top:23px; background:#fbd3db; border:1px solid #ec7186; padding:5px; border-radius:5px;}
+/* .mirror_search:hover .hide{left:17px;} */
+/* .mirror_next:hover .hide{left:50px;} */
+/* .mirror_pre:hover .hide{left:85px;} */
+/* .mirror_change:hover .hide{left:125px;} */
+/* .mirror_all:hover .hide{left:148px;} */
+/* .mirror_full:hover .hide{left:188px;} */

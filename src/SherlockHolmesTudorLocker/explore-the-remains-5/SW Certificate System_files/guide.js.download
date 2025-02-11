@@ -1,0 +1,87 @@
+function startIntro(arr, locale, type){ // 팝업 및 시험전 안내 화면에서 시작되는 경우
+	var intro = introJs();		
+  	var jsonParam = {};
+  	
+  	jsonParam.steps = arr;
+  	
+  	//alert(JSON.stringify(jsonParam));
+  	intro.setOptions(jsonParam);
+  	intro.setOption('nextLabel', 'next');
+  	intro.setOption('prevLabel', 'back');
+  	intro.setOption('skipLabel', 'close');
+   	intro.setOption('tooltipPosition', 'auto');
+   	intro.setOption('overlayOpacity', 0.6);
+   	intro.setOption('fontSize', 14);
+	intro.setOption('showStepNumbers', false);
+	intro.setOption('keyboardNavigation', true);
+   	intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top'])
+    
+   	if (usePopup == true) { // 팝업일 경우
+   		if (document.querySelector("#btnf") != null) { // list sample 화면일 경우 가장 마지막 순서에 왔을 때는 다음 페이지로 이동하는 이벤트 실행함.
+			intro.setOption('doneLabel', 'Next page').start().oncomplete(function() {
+		   		window.location.href = "/common/guide/samples/problem_sample.jsp?locale=" + locale + "&start=true&title=" + titleNm +'&logoMainfileName=' + imgNm + '&type=' + type;
+		        });
+   		} else {
+	   		intro.setOption('doneLabel', 'close').start().oncomplete(function() { //팝업일 경우 가장 마지막에 온후에는 창을 닫는 이벤트 실행함. 
+	   			window.open('', '_self').close();
+			        });
+   		}
+   	} else { //guide 화면일 경우  		
+   		
+   		if (document.querySelector("#btnf") != null) { // list sample 화면일 경우 가장 마지막 순서에 왔을 때는 다음 페이지로 이동하는 이벤트 실행함.
+			intro.setOption('doneLabel', 'Next page').start().oncomplete(function() {
+		   		window.location.href = "/common/guide/samples/problem_sample.jsp?locale=" + locale + "&multipage=true&title=" + titleNm +'&logoMainfileName=' + imgNm+ '&type=' + type;
+		        });
+   		}else { // problem sample화면일 경우 마지막 순서에 왔을 때는 원래 가이드 화면으로 돌아감.
+   			intro.setOption('doneLabel', 'done').start().oncomplete(function() {
+   				window.top.exit_guide();
+	        });
+   		}
+   	}
+   	
+	intro.onexit(function() { //가이드 화면이 종료 될 경우
+		if (usePopup == true) {
+			window.open('', '_self').close();
+		} else {
+			window.top.exit_guide();
+		}
+	});
+	
+	intro.onchange(function(target) { // problem sample화면의 compile 내역에 대한 가이드 화면일 경우 
+   		if (target.id == "count_close2") {
+   			Openbot();
+   		} else if (target.id == "btnf_proposal") {
+   			Closebot();
+   		}
+   	})
+ }
+
+function startGuideIntro(arr){ // 시험 본문에서 가이드를 시작할 경우
+	var intro = introJs();		
+  	var jsonParam = {};
+  	
+  	jsonParam.steps = arr;
+  	
+  	//alert(JSON.stringify(jsonParam));
+  	intro.setOptions(jsonParam);
+  	intro.setOption('nextLabel', 'next');
+  	intro.setOption('prevLabel', 'back');
+  	intro.setOption('skipLabel', 'close');
+  	intro.setOption('doneLabel', 'done');
+   	intro.setOption('tooltipPosition', 'auto');
+   	intro.setOption('overlayOpacity', 0.6);
+   	intro.setOption('fontSize', 13);
+	intro.setOption('showStepNumbers', false);
+	intro.setOption('keyboardNavigation', true);
+   	intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top'])
+	
+   	intro.start();
+   
+	intro.onchange(function(target) { // problem sample화면의 compile 내역에 대한 가이드 화면일 경우 
+   		if (target.id == "count_close2") {
+   			Openbot();
+   		} else if (target.id == "btnf_proposal") {
+   			Closebot();
+   		}
+   	})
+ }
