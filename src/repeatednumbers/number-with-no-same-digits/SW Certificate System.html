@@ -1,0 +1,4104 @@
+<!DOCTYPE html>
+<!-- saved from url=(0049)http://105.112.12.30:8080/common/satti/problem.do -->
+<html><object id="jnobgabnnbdhjompaagbfbjiimplamll" width="0" height="0" style="display: none;"></object><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<!--HTTP 1.1-->
+	
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">
+<!-- 	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>  -->
+	<meta http-equiv="X-UA-Compatible" content="IE=11">
+
+<link rel="stylesheet" href="./SW Certificate System_files/codemirror.css" type="text/css">
+<link rel="stylesheet" href="./SW Certificate System_files/eclipse.css" type="text/css">
+<link rel="stylesheet" href="./SW Certificate System_files/fullscreen.css" type="text/css">
+<link rel="stylesheet" href="./SW Certificate System_files/dialog.css" type="text/css">
+<link rel="stylesheet" href="./SW Certificate System_files/codemirror-ui.css" type="text/css">
+<link rel="stylesheet" href="./SW Certificate System_files/default_satti.css" type="text/css">
+<link rel="stylesheet" href="./SW Certificate System_files/jquery-ui-1.8.21.custom.css" type="text/css">
+
+
+
+
+
+<script src="./SW Certificate System_files/jquery-1.11.2.min.js.download"></script>
+<script src="./SW Certificate System_files/bootbox.min.js.download" type="text/javascript"></script>
+
+<script src="./SW Certificate System_files/bootstrap.min.js.download" type="text/javascript"></script>
+
+<script src="./SW Certificate System_files/jquery-1.7.2.js.download" type="text/javascript"></script>
+<script src="./SW Certificate System_files/jquery-ui.js.download" type="text/javascript"></script>
+<script src="./SW Certificate System_files/common.js.download" type="text/javascript"></script><style type="text/css">* html {background:#fff;}#aside{position:fixed;_position:absolute;z-index:999;height:100%;top:0px;left:0px;_top:expression(document.documentElement.scrollTop+document.documentElement.clientHeight-this.clientHeight);_left:expression(document.documentElement.scrollLeft + document.documentElement.clientWidth - offsetWidth);}</style>
+<script src="./SW Certificate System_files/common_satti.js.download" type="text/javascript"></script><style type="text/css">* html {background:#fff;}#header{position:fixed;_position:absolute;z-index:999;width:100%;top:0px;right:0px;_top:expression(document.documentElement.scrollTop+document.documentElement.clientHeight-this.clientHeight);_left:expression(document.documentElement.scrollLeft + document.documentElement.clientWidth - offsetWidth);}</style><style type="text/css">* html {background:#fff;}#footer{position:fixed;_position:absolute;z-index:999;width:100%;bottom:0px;right:0px;_top:expression(document.documentElement.scrollTop+document.documentElement.clientHeight-this.clientHeight);_left:expression(document.documentElement.scrollLeft + document.documentElement.clientWidth - offsetWidth);}</style><style type="text/css">* html {background:#fff;}#aside{position:fixed;_position:absolute;z-index:999;height:100%;top:0px;left:0px;_top:expression(document.documentElement.scrollTop+document.documentElement.clientHeight-this.clientHeight);_left:expression(document.documentElement.scrollLeft + document.documentElement.clientWidth - offsetWidth);}</style>
+<script src="./SW Certificate System_files/commonCalendar.js.download" type="text/javascript"></script><title>SW Certificate System</title></head><body><div id="minical" class="cal_wrap" onmouseover="caledarOver()">
+</div>
+
+<script src="./SW Certificate System_files/portalCommon.js.download" type="text/javascript"></script>
+<script src="./SW Certificate System_files/numberFormat.js.download" type="text/javascript"></script>
+<script src="./SW Certificate System_files/lang.do"></script>
+<script type="text/javascript">
+	var contextPath="/common";
+	var prodMode="Y";
+	var title="SW Certificate System";
+	var logoMainfileName="logo_company.png";
+	var logoLoginfileName="login_logo_company.png";
+	
+	var toggleOpen = false;
+	var isProdMode = false;
+	
+	$(document).ready(function ()
+	{   
+		document.title = title;
+	
+		if(prodMode == "Y") {
+			isProdMode = true;
+		} else {
+			isProdMode = false;
+		}
+				
+		var imgPath = "../imgs/" + logoMainfileName;
+		$(".logoMain").attr("alt", title);	
+		$(".logoMain").attr("src", imgPath);		
+	});
+		
+	
+	/* // 뒤로가기버튼 막기
+	history.pushState(null, null, location.href);
+	window.onpopstate = function(event) {
+		history.go(1);
+	}; */
+	
+	// 백스페이스 방지
+	$(document).keydown(function(e){
+		if(e.target.nodeName != "INPUT" && e.target.nodeName != "TEXTAREA") {        	
+            if(e.keyCode === 8) {
+            	return false;
+            }
+                     
+            event.cancelBubble = true;
+            event.returnValue = false;
+        }
+    });
+	
+	function logout()
+	{
+	    // top.location.replace("/common/identity/logout.do");
+	}
+
+	function changeLang(lang)
+	{
+		$.ajax({
+		    url : contextPath + "/satti/changeLanguage.do",
+		    type : 'POST',
+		    data : {language:lang},
+		    success: function () {
+		    	// location.reload();
+		    	var frm = document.MainForm;
+		    	if(frm)
+		    	{
+		    		frm.action = frm.do_url.value;
+		    		frm.submit();		    		
+		    	}
+		    	else
+		    	{
+			    	location.href = location.href;
+		    	}
+		    },
+		    error : function () {
+		    	alert("Fail Change Language.");
+		    },
+		    scope : this
+		});
+		
+	}
+	
+	$(document).on('click', function(e) {
+		if($(e.target).parents('.myDiv').size() == 0 && $(e.target).parents('#guide').size() == 0 && $(e.target).parents('#notice').size() == 0) {
+			if(toggleOpen) {
+				pop_qna_comm();
+			}
+		}
+	});
+	
+	function pop_guide()
+	{
+		var url = "/common/satti/pop_guide.do";
+		window.open(url,'guide','top=100,left=350,width=840, height=580,scrollbars=yes,status=0,resizable=yes,menubar=0,toolbar=0,location=0,titlebar=0,directories=0,addressbar:0');
+	}
+
+	function pop_faq()
+	{
+		var url = "/common/satti/pop_faq.do";
+		window.open(url,'faq','top=100,left=350,width=840, height=680,scrollbars=yes,status=0,resizable=yes,menubar=0,toolbar=0,location=0,titlebar=0,directories=0,addressbar:0');
+	}
+	
+	function pop_privacyPolicyDoc(language)
+	{
+		var url = "/common/satti/pop_privacyPolicyDoc.do?language=" + language;
+		window.open(url,'faq','top=100,left=350,width=800, height=600,scrollbars=yes,status=0,resizable=yes,menubar=0,toolbar=0,location=0,titlebar=0,directories=0,addressbar:0');
+	}	
+	
+	function pop_notice_list()
+	{
+		var url = "/common/satti/pop_notice_list.do";
+		window.open(url,'noticelist','top=100,left=350,width=840, height=680,scrollbars=yes,status=0,resizable=yes,menubar=0,toolbar=0,location=0,titlebar=0,directories=0,addressbar:0');
+	}
+	
+	function pop_qna()
+	{		
+		$('#qna').html('');
+		pop_qna_comm();		
+	}
+	
+	function pop_qna_for_noti() {
+		if(!toggleOpen) {
+			pop_qna_comm();
+		}
+	}
+		
+	function pop_qna_comm() {
+		var effect = 'slide';
+
+		 // Set the options for the effect type chosen
+		var options = { direction: 'left' };
+
+		// Set the duration (default: 400 milliseconds)
+		var duration = 300;
+		
+		$('.myDiv').toggle(effect, options, duration, function() {
+			if(toggleOpen) {
+				toggleOpen = false;				
+			} else {
+				toggleOpen = true;
+				
+				updateUnredMsg(); // 모지 않는 메시지 모두 본 것으로 업데이트
+				
+				msgReload();
+				
+				qnaLayer_close(); // 채팅 창 열릴 때 오른쪽 공지 없애기
+				
+				setUnredMsgCnt(0); // 보지 않은 메시지 갯수 초기화
+			}
+			
+			scrollToLast();
+		});
+	}
+	
+	function updateUnredMsg() {
+		$.ajax({
+ 		    url : contextPath + "/satti/updateUnredMsg.do",
+ 		    type : 'POST',
+ 		    async : true,
+ 		    success : function (result) {
+ 		    	
+ 		    },
+ 		    error : function () {
+ 		    	alert("Fail Change Language.");
+ 		    }
+ 		});
+		
+		
+	}
+	
+	function msgReload(){
+		$.ajax({
+ 		    url : contextPath + "/satti/pop_qna_list.do",
+ 		    type : 'POST',
+ 		    async : true,
+ 		    error : function () {
+ 		    	alert("Fail Change Language.");
+ 		    }
+ 		});
+	}
+	
+	function sendQna() {
+ 		var inputMsg = $('.textsty').val();
+		var htmlMsg = inputMsg;
+ 		
+		  var rv = -1; // Return value assumes failure.  
+	        
+			if(inputMsg.trim().length == 0) {
+				return ;
+			}
+			
+				
+	                
+			if(!isProdMode) {
+				bootbox.alert("'Send' is not available in Practice Test.", "Q&A", "5", null, function(result) {
+				
+				});
+				return ;
+			}else{
+				if (navigator.appName == 'Microsoft Internet Explorer') {        
+	                var ua = navigator.userAgent;        
+	                var re = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");        
+	                if (re.exec(ua) != null)            
+	                    rv = parseFloat(RegExp.$1);    
+	                   if (rv <= 9){
+	                     // alert("This system supports Internet Explorer 10 or later.");
+	                      bootbox.alert("This system supports Internet Explorer 10 or later.", " ", "5", null, function(result) {
+	               			return;
+	              		});
+	                      return false;
+	                   }
+				 }
+			}
+			
+			
+		
+		// XSS 처리
+ 		var lt = /</g, gt = />/g, ap = /'/g, ic = /"/g;
+ 	    
+ 		htmlMsg = htmlMsg.replace(lt, "&lt;").replace(gt, "&gt;").replace(ap, "&#39;").replace(ic, "&#34;").replace(/(\r\n|\n|\r)/gm, "<br>");
+ 		
+ 		var spanTag = document.createElement("span");
+		spanTag.setAttribute('class', 'point'); 			
+		spanTag.innerHTML = "["+$('.'+document.querySelector('input[name="radio"]:checked').id).text()+"]";
+					 			
+		var pTag = document.createElement("p");
+		pTag.setAttribute('class', 'label');
+		pTag.innerHTML = spanTag.outerHTML + htmlMsg;
+
+		var pTagImg = document.createElement("p");
+		pTagImg.setAttribute('class', 'label_after');
+				
+		var divTag = document.createElement("div");
+		divTag.setAttribute('class', 'question');
+		divTag.appendChild(pTag);
+		divTag.appendChild(pTagImg);
+		
+		document.getElementById('qna').appendChild(divTag);			
+		
+		$('.textsty').val("");
+		$('.txt_info').html('(0/1000)');
+		
+		scrollToLast();
+		
+		qnaSend(inputMsg);
+ 	}
+	
+	function scrollToLast() {
+ 		var objDiv = document.getElementById("qna");
+		objDiv.scrollTop = objDiv.scrollHeight;
+ 	}
+	
+	function pop_sampleInput(contestProbId)
+	{
+		var url = "/common/satti/pop_sampleInput.do?contestProbId=" + contestProbId;
+		window.open(url,'sampleInput','top=100,left=350,width=950, height=680,scrollbars=yes,status=0,resizable=yes,menubar=0,toolbar=0,location=0,titlebar=0,directories=0,addressbar:0');
+	}
+
+	function pop_code(contestId, contestProbId, contestHistoryId)
+	{
+		var url = "/common/satti/pop_code.do?contestId=" + contestId + "&contestProbId=" + contestProbId + "&contestHistoryId=" + contestHistoryId;
+		window.open(url,'faq','top=100,left=350,width=840, height=680,scrollbars=yes,status=0,resizable=yes,menubar=0,toolbar=0,location=0,titlebar=0,directories=0,addressbar:0');
+	}
+
+	function guideViewer(language, contestType){
+
+// 		$.ajax({
+// 		    url : contextPath + "/p_stopcoder/contest/checkUpdatedManual.do",
+// 		    type : 'POST',
+// 		    data : { 
+// 		    		contestTypeCd : contestType,
+// 		    		language : language
+// 		    		},
+// 		    success: function () {
+// 		    	var fileName ="";
+// 				if(language == 'ko')
+// 				{
+// 					if(contestType == "IT"){
+// 						fileName = "guideViewer";
+// 					}else if(contestType == "IG"){
+// 						fileName = "guideIGViewer";
+// 					}else if(contestType == "FT"){
+// 						fileName = "guideFTViewer";
+// 					}else {
+// 						fileName = "guideATViewer";
+// 					}
+// 				}
+// 				else
+// 				{
+// 					if(contestType == "IT"){
+// 						fileName = "guideViewer_en";
+// 					}else if(contestType == "IG"){
+// 						fileName = "guideIGViewer_en";
+// 					}else if(contestType == "FT"){
+// 						fileName = "guideFTViewer_en";
+// 					}else {
+// 						fileName = "guideATViewer_en";
+// 					}
+// 				}
+
+// 				var guideWindow = window.open("/common/jsp/common/"+fileName+".html", "guide", "toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,width=1024,height=768");
+
+// 		  	    if(guideWindow){
+// 				   	guideWindow.focus();
+// 				}
+// 		    },
+// 		    error : function () {
+// 		    }
+// 		});
+	
+		var url = "/common/satti/manualView.do?contestTypeCd="+contestType+"&language="+language;
+		var guideWindow = window.open(url, "guideViewer", "toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,width=1024,height=768");
+	}
+	
+	function checkByte() {
+		var limitByte = 1000;
+        var totalByte = 0;
+        var msgLength = 0;
+        var message = $('.textsty').val();
+
+        for(var i =0; i < message.length; i++) {
+        	var currentByte = message.charCodeAt(i);
+            
+        	if(currentByte > 128) totalByte += 2;
+			else totalByte++;
+        	
+        	if(totalByte == limitByte) {
+        		msgLength = i;
+        	}
+        }
+        
+        $('.txt_info').html('(' + totalByte + '/1000)');
+
+        if(totalByte > limitByte) {
+        	$(".textsty").val(message.substring(0, msgLength));
+		}
+	}
+	
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script language="Javascript" type="text/javascript" src="./SW Certificate System_files/codemirror.js.download"></script>
+<script language="Javascript" type="text/javascript" src="./SW Certificate System_files/matchbrackets.js.download"></script>
+<script language="Javascript" type="text/javascript" src="./SW Certificate System_files/active-line.js.download"></script>
+<script language="Javascript" type="text/javascript" src="./SW Certificate System_files/clike.js.download"></script>
+<script language="Javascript" type="text/javascript" src="./SW Certificate System_files/fullscreen.js.download"></script>
+<script language="Javascript" type="text/javascript" src="./SW Certificate System_files/dialog.js.download"></script>
+<script language="Javascript" type="text/javascript" src="./SW Certificate System_files/searchcursor.js.download"></script>
+<script language="Javascript" type="text/javascript" src="./SW Certificate System_files/search.js.download"></script>
+
+<script language="Javascript" type="text/javascript" src="./SW Certificate System_files/codemirror-ui.js.download"></script>
+
+
+<!-- <script language="Javascript" type="text/javascript" src="../edit_area/edit_area_full.js"></script> -->
+<script language="Javascript" type="text/javascript" src="./SW Certificate System_files/jquery.form.js.download"></script>
+<script language="Javascript" type="text/javascript">
+	var utf8length = 0;
+    var isEditChange = false;
+    var prevSelCodeLang = "";
+	var isSubmit=false;
+    var isGetSapInfo = false;
+    
+    
+	
+		var remainSeconds = '10533' - 0;
+	
+	
+    var cEditor;
+//     var cEditor = CodeMirror.fromTextArea(document.getElementById("textSource"), {
+//         lineNumbers: true,
+//         matchBrackets: true,
+//         mode: "text/x-csrc"
+//       });
+
+    
+	    var prob1Seconds = '0' - 0;
+	    var prob2Seconds = '' - 0;
+	    var prob3Seconds = '' - 0;
+	    var prob4Seconds = '' - 0;
+	    var prob5Seconds = '' - 0;
+
+	/* // 윈도우창 닫을때
+	window.onbeforeunload = function ()
+	{
+	    if(isEditChange)
+	    {
+	        return 'Do you want to close this window <br>without saving current document?';
+	    }
+	}
+ */
+	// 편집 변경에 대한 확인
+	/* function checkEditChangeConfirm()
+	{
+	    if(isEditChange)
+	    {
+	    	
+			bootbox.confirm("Do you want to move to other pages <br>without saving changed document?", " ", function(result) {
+				return result;
+			});  		
+	    }
+	    else
+	    {
+	        return true;
+	    }
+	    
+	} */
+
+	
+	$(document).ready(function()
+	{
+		displayMySubjmitTime();
+		
+		var timezone = (new Date().getTimezoneOffset()-"-3"*-1*60)*-1*60*1000;
+		var starttime = new Date("Mon, 28 Oct 2024 09:00:00");
+
+		
+		var endtime = new Date("Mon, 28 Oct 2024 12:00:00");
+		starttime.setSeconds(starttime.getSeconds(), timezone);
+		endtime.setSeconds(endtime.getSeconds(), timezone);
+		
+		displayContesttime(starttime,endtime);
+		displayTimer('remainTime', remainSeconds);
+
+		
+
+		
+			tickMinute();
+		
+		
+		tickSecond();
+		
+		toggleOpen = false;
+	
+		$(document).keydown(function(e) {
+		    if (e.keyCode == 67 && e.ctrlKey) {
+		    	document.execCommand("copy");
+		    }
+		});
+	});
+	
+	window.onload = function(){
+		var tempLang = "";
+		
+		if(prevSelCodeLang == null || prevSelCodeLang == "") {
+			changeStyle("c");
+			lastLangSourceLoad("c");
+		} else {
+			if(prevSelCodeLang == "J")
+		    {
+				tempLang = "java";
+		    }
+		    else if(prevSelCodeLang == "C")
+		    {
+		    	tempLang = "c";
+		    }
+		    else if(prevSelCodeLang == "P")
+		    {
+		    	tempLang = "cpp";
+		    }
+		    else if(prevSelCodeLang == "A") 
+		    {
+		    	tempLang = "abap";			
+		    }
+			
+			changeStyle(tempLang);
+			lastLangSourceLoad(tempLang);
+		}
+	}
+		
+	function displayMySubjmitTime(){
+		var timezone = new Date().getTimezoneOffset()*-1*60*1000;
+				
+		var mySubmitHistoryLength = "0";
+		
+	}
+	
+	function displayContesttime(starttime,endtime)
+	{
+	    var year = starttime.getFullYear();
+	    var month = starttime.getMonth() + 1;
+	    var date = starttime.getDate();
+	    var starthour = starttime.getHours();
+	    var startminute= starttime.getMinutes();
+	    var endhour = endtime.getHours();
+	    var endminute= endtime.getMinutes();
+
+		if(month < 10) { month = "0" + month };
+		if(date < 10) { date = "0" + date };
+		if(starthour < 10) { starthour = "0" + starthour };
+		if(startminute < 10) { startminute = "0" + startminute };
+		if(endhour < 10) { endhour = "0" + endhour };
+		if(endminute < 10) { endminute = "0" + endminute };
+
+	    $("#contestTime").html(year + "-" + month + "-" + date + " " + starthour + ":" + startminute + " ~ " + endhour + ":" + endminute);
+	}
+	
+	// 시간을 시계로 표시
+	function displayTimer(id, sec)
+	{
+	    var Seconds = sec;
+
+	    var Hours = Math.floor(Seconds / 3600);
+	    Seconds -= Hours * (3600);
+
+	    var Minutes = Math.floor(Seconds / 60);
+	    Seconds -= Minutes * (60);
+
+	    $("#" + id + "_hour").html(leadingZero(Hours));
+		$("#" + id + "_min").html(leadingZero(Minutes));
+		$("#" + id + "_sec").html(leadingZero(Seconds));
+	    
+	    $("#" + id).html(leadingZero(Hours) + ":" + leadingZero(Minutes) + ":" + leadingZero(Seconds));
+	}
+
+	// 시분초 2자리 만들기
+	function leadingZero(Time)
+	{
+	    return (Time < 10)  ? "0" + Time  : +Time;
+	}
+
+	// 신입검정 시계표시
+	function displayTimer_FT()
+	{
+		 displayTimer('probTime1', prob1Seconds); 
+		
+		
+		
+		
+	}
+
+	// 1분마다 호출
+//   function tickMinute()
+// 	{
+// 	    var rv = -1; // Return value assumes failure.  
+// 		var prodMode="Y";
+//            	if(prodMode == "N") {
+// 	          if (navigator.appName == 'Microsoft Internet Explorer') {    //IE버전체크     
+// 	               var ua = navigator.userAgent;        
+// 	               var re = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");        
+// 	                 if (re.exec(ua) != null)            
+// 	                    rv = parseFloat(RegExp.$1);    
+// 	                  if (rv <= 9){
+	         
+// 	                }
+// 	             }
+// 	          }else{
+// 	            	 if(ws==null){
+// 	       			 connect();
+// 	       	         }
+// 	          }   
+		
+// 		var params = {contestId : "AZLDx4gTEPI8b65q"};
+// 		var url = contextPath + "/satti/contest/contestRemainTime.do";
+
+// 		$.ajax(
+// 		{
+// 			type : "POST",
+// 			url : url,
+// 			data : params,
+// 			async: false,
+// 			success : function(ret)
+// 			{
+// 				remainSeconds = ret.remainEtime;
+// 				displayTimer('remainTime', remainSeconds);
+// 				if(remainSeconds>0){
+// 					var timezone = (new Date().getTimezoneOffset()-ret.timezone*-1*60)*-1*60*1000;
+// 					var starttime = new Date(ret.startDatetime);
+
+					
+// 					var endtime = new Date(ret.endDatetime);
+// 					starttime.setSeconds(starttime.getSeconds(), timezone);
+// 					endtime.setSeconds(endtime.getSeconds(), timezone);
+					
+// 					displayContesttime(starttime,endtime);
+// 					window.setTimeout("tickMinute()", 60 * 1000);
+// 				}
+// 			},
+// 			error : function(request, err, ex)
+// 			{
+// 				bootbox.alert(err + " ===> " + ex, " ","4",null, function() {
+						
+// 				}); 
+// 				//pop_alert(err + " ===> " + ex,"","5");
+// 			}
+// 		});
+// 	};
+
+	// 1초마다 호출
+	function tickSecond()
+	{
+		displayTimer('remainTime', --remainSeconds);
+		if(remainSeconds <= 0)
+		{
+			$("#remainTime").html("00 : 00 : 00");
+			bootbox.alert("Time is up.\nThank you."," ","2",null, function(result) {
+					goEndOnTime();
+					//return;
+			}); 
+			//pop_alert("Time is up.\nThank you.","","5");
+		}
+		else{
+				
+					displayTimer('probTime1', prob1Seconds++);
+					convertTimerColor('probTime1');
+				
+				
+				
+				
+							
+	
+			window.setTimeout("tickSecond()", 1000);
+		}
+	}
+	
+	// 모의검정 Session 유지용 Dummy
+	function remainSession()
+	{
+		var REMAIN_SESSION_URL = contextPath + "/satti/remainSessionSSO.do";
+		
+		$.ajax(
+		{
+			type : "POST",
+			url : REMAIN_SESSION_URL,
+			async: false,
+			success : function(){
+			},
+		});
+		window.setTimeout("remainSession()", 60 * 1000);
+	}
+	
+	//신입 accept 시 타이머 초록색으로
+	function convertTimerColor(timerId){
+		$("#"+timerId).removeClass("tim");
+		$("#"+timerId).addClass("timeing");
+	}
+
+	$(document).ready(function()
+	{
+		var langCd = initCodeLang('C,P,J'); // 선택가능 언어 셋팅
+		//langCd = ""; // 현업 요청으로 언어 자동 선택 안되게 함. 현업 요청으로 다시 선택되게함.
+
+		// 관리자가 문제 등록시 선택 가능언어로 셋팅하고 응시자가 저장한 값이 있으면 그 값을 셋팅.
+		
+		
+		var chLang;
+	    if(langCd == "J")
+	    {
+	        chLang = "java";
+	    }
+	    else if(langCd == "C")
+	    {
+	        chLang = "c";
+	    }
+	    else if(langCd == "P")
+	    {
+	        chLang = "cpp";
+	    }
+	    else if(langCd == "A") 
+	    {
+	    	chLang = "abap";	
+	    }		
+	    
+		cEditor = new CodeMirrorUI(document.getElementById("textSource"),
+		{
+	    	searchMode : 'popup'
+	    },
+	    {
+			lineNumbers: true,
+		    styleActiveLine: true,
+		    matchBrackets: true,
+		    smartIndent: true,
+		    indentUnit: 4,
+//	 	    extraKeys: {"Ctrl-Space": "autocomplete"},
+		    mode: getLangMode(chLang),
+		    theme: "eclipse",
+			extraKeys: {
+				"F11": function(cm) {
+			    	cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+			        
+			    	if (!cm.getOption("fullScreen")) {
+			        	$("#aside").show();
+			        	$("#btnarea").show();
+			        }else {
+			        	$("#aside").hide();
+			        	$("#btnarea").hide();
+			        }
+				},
+			    "Esc": function(cm) {
+			    	if (cm.getOption("fullScreen")) {
+			        	cm.setOption("fullScreen", false);
+			        	$("#aside").show();
+			        	$("#btnarea").show();
+			        }
+			   	}
+//	 		    "Ctrl-Space": "autocomplete"
+			}
+		});
+	      	
+		cEditor.on("change", onEditChange);
+		var langObj = document.getElementsByName("lang");
+		for(var i = 0; i < langObj.length ; i++)
+		{
+		    if(langObj[i].value == langCd)
+		    {
+		    	langObj[i].checked = true;
+		    	
+		    	lastLangSourceLoad(langCd);
+		    	
+		    	break;
+		    }
+		}
+	});
+	
+	function getLangMode(lang)
+	{
+		var langMode;
+		
+	    if(lang == "java")
+	    {
+	    	langMode = "text/x-java";
+	    }
+	    else if(lang == "c")
+	    {
+	    	langMode = "text/x-csrc";
+	    }
+	    else if(lang == "cpp")
+	    {
+	    	langMode = "text/x-c++src";
+	    }
+		
+		return langMode;
+	}
+
+	//
+	function initCodeLang(codeLang)
+	{
+	    var langObj = document.getElementsByName("lang");
+
+	    var codeLangSet = "";
+	    var arrCodeLang = codeLang.split(",");
+
+	    // 관리자가 셋팅한 언어만 disable 을 false 시킨다.
+	    for(var i = 0; i < arrCodeLang.length; i++)
+	    {
+	        for(var j = 0; j < langObj.length; j++)
+	        {
+	            if(arrCodeLang[i] == langObj[j].value)
+	            {
+	                langObj[j].disabled = false;
+	            }
+	        }
+	    }
+
+	    // 관리자 문제 등록시 설정한 문제풀기 언어를 가져온다.
+	    // C, C++, Java 순으로 default 셋팅하기위함.
+	    var returnValue = "";
+	    if(codeLang.indexOf("C") != -1)
+	    {
+	        returnValue = "C";
+	    }
+	    else if(codeLang.indexOf("P") != -1)
+	    {
+	        returnValue = "P";
+	    }
+	    else if(codeLang.indexOf("J") != -1)
+	    {
+	        returnValue = "J";
+	    }
+	    else if(codeLang.indexOf("A") != -1)
+	    {
+	        returnValue = "A";
+	    }
+	    
+	    return returnValue;
+	}
+
+	// 임시소스 로드
+	function imsiSourceLoad(codeLangCd)
+	{
+	    var params =
+	    {
+	        codeLangCd : codeLangCd,
+	        contestProbId : $("#contestProbId").val()
+	    };
+
+	    var url = contextPath + "/satti/sourceTempLoad.do";
+	    $.ajax(
+	    {
+	        type : "POST",
+	        url : url,
+	        data : params,
+	        async : false,
+	        success : function(ret)
+	        {
+	            if(codeLangCd == ret.lang)
+	            {
+	                if(ret.code)
+	                {
+	                    var code1 = ret.code.split("&lt;").join("<");
+	                    var code2 = code1.split("&gt;").join(">");
+// 	                    $("#textSource").val(code2);
+           				cEditor.setValue(code2);
+	                    isEditChange = false;
+	                }
+	            }
+	        },
+	        error : function(request, err, ex)
+	        {
+	        	bootbox.alert(err + " ===> " + ex, " ","4",null, function(result) {
+				}); 
+	        	//pop_alert(err + " ===> " + ex,"","5");
+	        }
+	    });
+	}
+
+	// 소스창 보이기 여부
+	function displayTextSource(langCd)
+	{
+		if(langCd == "")
+		{
+			$("#textSourceDiv").hide();
+			$("#textInfoDiv").show();
+		}
+		else
+		{
+			$("#textSourceDiv").show();
+			$("#textInfoDiv").hide();
+		}
+	}
+
+// 	editAreaLoader.init({
+// 		id: "textSource"
+// 		,start_highlight: true
+// 		,allow_resize: "y"
+// 		,allow_toggle: false
+// 		,word_wrap: false
+// 		,language: "en"
+// 		,syntax : "cpp"
+// 		,toolbar: "search, go_to_line, |, undo, redo, |, select_font, |, change_smooth_selection, highlight, reset_highlight, |, help"
+// 		,show_line_colors: true
+//     	,change_callback : "onEditChange"
+// 	});
+
+
+
+	// 언어코드 변경
+	function transCodeLangType(codeLang)
+	{
+	    var returnValue = "";
+	    var arrCodeLang = codeLang.split(",");
+
+	    for(var i = 0; i < arrCodeLang.length; i++)
+	    {
+	        if(i == arrCodeLang.length - 1)
+	        {
+	            if(arrCodeLang[i] == "C")
+	            {
+	                returnValue += "*.c";
+	            }
+	            else if(arrCodeLang[i] == "P")
+	            {
+	                returnValue += "*.cpp";
+	            }
+	            else if(arrCodeLang[i] == "J")
+	            {
+	                returnValue += "*.java";
+	            }
+	        }
+	        else
+	        {
+	            if(arrCodeLang[i] == "C")
+	            {
+	                returnValue += "*.c,";
+	            }
+	            else if(arrCodeLang[i] == "P")
+	            {
+	                returnValue += "*.cpp,";
+	            }
+	            else if(arrCodeLang[i] == "J")
+	            {
+	                returnValue += "*.java,";
+	            }
+	        }
+	    }
+
+	    return returnValue;
+	}
+
+	// 편집 스타일 변경
+	function changeStyle(lang)
+	{
+// 	    editAreaLoader.init(
+// 	    {
+// 	        id : "textSource",
+// 	        start_highlight : true,
+// 	        allow_resize : "y",
+// 	        allow_toggle : false,
+// 	        word_wrap : false,
+// 	        language : "en",
+// 	        syntax : lang,
+// 	        toolbar : "search, go_to_line, |, undo, redo, |, select_font, |, change_smooth_selection, highlight, reset_highlight, |, help",
+// 	        show_line_colors : true,
+// 	        change_callback : "onEditChange"
+// 	    });
+// 		cEditor = CodeMirror.fromTextArea(document.getElementById("textSource"), {
+// 	        lineNumbers: true,
+// 	        matchBrackets: true,
+// 	        mode: "text/x-csrc"
+// 	    });
+
+		if(lang != "abap") 
+			cEditor.setOption("mode", getLangMode(lang));
+
+	    var langObj = document.getElementsByName("lang");
+	    
+	    if(lang == "java")
+	    {
+	        lang = "J";
+	    }
+	    else if(lang == "c")
+	    {
+	        lang = "C";
+	    }
+	    else if(lang == "cpp")
+	    {
+	        lang = "P";
+	    }
+	    else if(lang == "abap") 
+	    {
+	    	lang = "A";			
+	    }
+
+	    for(var i = 0; i < langObj.length; i++)
+	    {
+	        if(langObj[i].value == lang)
+	        {
+	            langObj[i].checked = true;
+	            break;
+	        }
+	    }
+	    
+	    changeElements(lang);
+	}
+
+	function changeElements(lang) {		
+		if(lang=="A") {
+			$("#btnf_init").css("visibility", "hidden");
+			$("#fileData").attr("disabled", true);
+			$("#btnf_save").css("visibility", "hidden");
+			$("#btnf_compile").css("visibility", "hidden");
+			$("#btnf_test").css("visibility", "hidden");
+			$(".gotest").css("visibility", "hidden");
+			$("#webedit").css("visibility", "hidden");
+			$("#webedit").css("visibility", "hidden");
+			$(".editbox").hide();
+			$(".filep").hide();
+			$(".refer").hide();
+			
+			Closebot();
+		} else {
+			$("#btnf_init").css("visibility", "visible");
+			$("#fileData").attr("disabled", false);
+			$("#btnf_save").css("visibility", "visible");
+			$("#btnf_compile").css("visibility", "visible");
+			$("#btnf_test").css("visibility", "visible");
+			$(".gotest").css("visibility", "visible")
+			$("#webedit").css("visibility", "visible");
+			$("#webedit").css("visibility", "visible");
+			$(".editbox").show();
+			$(".filep").show();
+			$(".refer").show();
+		}
+	}
+	
+	// 사용자 업로드 파일
+	function userAgentCheckReadFile()
+	{
+	    var fileName = window.document.getElementById('fileData').value;
+	    var fileNm = fileName.substr(fileName.lastIndexOf("\\") + 1);
+	    var langType = fileNm.substr(fileNm.lastIndexOf(".") + 1);
+
+	    // 관리자가 지정한 언어로만 파일 업로드 할 수 있게 셋팅
+	    var validFileType = false;
+	    var checkLangType = transCodeLangType('C,P,J');
+	    var arrLangType = checkLangType.split("*.").join("").split(",");
+
+	    if(langType != "")
+	    {
+	        for(var i = 0; i < arrLangType.length; i++)
+	        {
+	            if(langType == arrLangType[i])
+	            {
+	                validFileType = true;
+	            }
+	        }
+	    }
+
+	    if(validFileType)
+	    {
+	        isEditChange = true;
+	        changeStyle(langType);
+	        document.contestForm.target = "sourceTarget";
+	        document.contestForm.action = contextPath + "/satti/contestSourceLoad.do";
+	        document.contestForm.submit();
+	        
+	        var fileData = window.document.getElementById("fileData");
+	        //document.getElementById("fileDiv").removeChild(fileData);
+	        
+	        
+	        
+	        document.getElementById("fileDiv").innerHTML = "<dt>Attach file</dt><dd><input type='file' name='fileData' id='fileData' style='width:500px' onchange='userAgentCheckReadFile(); return false;' accept=''.java,.c,.cpp' /></dd>";
+	       // window.document.getElementById("fileName").value='';
+	       // var fileData = window.document.getElementById("fileData");
+	        //$('#fileName').value('');
+	        //document.getElementById("filediv").removeChild(fileData);
+	        //document.getElementById("filediv").innerHTML = 'File Attach <input type="file" style="width:500px" name="fileData" id="fileData" onchange="userAgentCheckReadFile();" accept=".java,.c,.cpp"/>';
+	    }
+	    else
+	    {
+	    	bootbox.alert('File type not allowed\nFile type allowed : ' + checkLangType, "Attach file","5",null, function(result) {
+			}); 
+	    	//pop_alert('File type not allowed\nFile type allowed : ' + "Attach file","5");
+	    }
+	}
+
+	// 마지막 소스로드
+// 	function lastLangSourceLoad(codeLangCd)
+// 	{
+// 	    var params =
+// 	    {
+// 	    	codeLangCd : codeLangCd,
+// 	        contestId : $("#contestId").val(),
+// 	        contestProbId : $("#contestProbId").val()
+// 	    };
+
+// 	    var url = contextPath + "/satti/lastLangSourceLoad.do";
+// 	    $.ajax(
+// 	    {
+// 	        type : "POST",
+// 	        url : url,
+// 	        data : params,
+// 	        async : false,
+// 	        success : function(ret)
+// 	        {
+// 	            if(codeLangCd == ret.lang)
+// 	            {
+// 	                if(ret.code)
+// 	                {
+// 	                    var code1 = ret.code.split("&lt;").join("<");
+// 	                    var code2 = code1.split("&gt;").join(">");
+// // 	                    $("#textSource").val(code2);
+// 	            		cEditor.setValue(code2);
+// 	                    isEditChange = false;
+// 	                }
+// 	            }
+// 	        },
+// 	        error : function(request, err, ex)
+// 	        {
+// 	        	bootbox.alert(err + " ===> " + ex, " ","2",null, function(result) {
+// 				});
+// 	        	//pop_alert(err + " ===> " + ex,"","5");
+// 	        }
+// 	    });
+// 	}
+
+	function loadInitCodeLang()
+	{
+		var lang;
+		var msg = "Are you sure you want to initialize?\nCurrent source code will be removed.";
+		
+		bootbox.confirm(msg, "Initialize the source code", function(result) {
+			if(result){
+				
+		        var langObj = document.getElementsByName("lang");
+		        
+		        for(var i = 0; i < langObj.length; i++)
+		        {
+		            if(langObj[i].checked == true)
+		            {
+		                lang = langObj[i].value;
+		            }
+		        }
+
+			    var chLang = "";
+			    
+			    if(lang == "J")
+			    {
+			        chLang = "java";
+			    }
+			    else if(lang == "C")
+			    {
+			        chLang = "c";
+			    }
+			    else if(lang == "P")
+			    {
+			        chLang = "cpp";
+			    }
+			    else if(lang == "A")
+			    {
+			    	chLang = "abap";	
+			    }
+
+			    changeStyle(chLang);
+		        imsiSourceLoad(lang);
+ 			}
+		}); 
+			
+/* 			
+		if(!pop_alert("Are you sure you want to initialize?\nCurrent source code will be removed.","","1"))
+        {
+            return false;
+        }
+ */
+
+	}
+
+/* 	// 언어선택
+	function selectCodeLang(lang)
+	{
+		var lang;
+		var msg = "Are you sure you want to initialize?\nCurrent source code will be removed.";
+		
+		bootbox.confirm(msg, "Language", function(result) {
+			if(result){
+						
+						
+		        var langObj = document.getElementsByName("lang");
+		        for(var i = 0; i < langObj.length; i++)
+		        {
+		            if(langObj[i].checked == true)
+		            {
+		                lang = langObj[i].value;
+		            }
+		        }
+		
+			    var chLang = "";
+			    if(lang == "J")
+			    {
+			        chLang = "java";
+			    }
+			    else if(lang == "C")
+			    {
+			        chLang = "c";
+			    }
+			    else if(lang == "P")
+			    {
+			        chLang = "cpp";
+			    }
+		
+			    changeStyle(chLang);
+		        imsiSourceLoad(lang);
+ 			}
+		}); 
+
+	} */
+
+	function selectCodeLang(lang)
+	{
+		var rv = -1;
+		
+		if(lang == "A") {
+			if (navigator.appName == 'Microsoft Internet Explorer') {    
+				var ua = navigator.userAgent;
+				var re = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");        
+				
+	            if(re.exec(ua) != null)
+					rv = parseFloat(RegExp.$1);    
+					            
+	            if (rv <= 9) {
+	               	bootbox.alert("The ABAP TEST supports Internet Explorer 10 or later.", " ", "5", null, function(result) {
+	           			
+	          		});
+	               	
+	               	return ;
+	        	}
+			}
+		}
+		
+		var isShowConfirm = true;
+    	
+    	var msg = "If you change the language, the source code <br>you were working on will be removed.\nWould you like to change?";
+    	
+    	if(prevSelCodeLang == lang) {
+    		isShowConfirm = false;
+    	} else {
+    		if(prevSelCodeLang == "A") {
+    			if(lang != "A")
+    				isShowConfirm = false;	
+    		} else {
+    			isShowConfirm = true;
+    		}
+    	}
+    	
+    	if(isShowConfirm) {
+			bootbox.confirm(msg, "Language", function(result) {
+				if(result){
+					prevSelCodeLang = lang;
+				    
+					var chLang = "";
+				    
+					if(lang == "J")
+				    {
+				        chLang = "java";
+				    }
+				    else if(lang == "C")
+				    {
+				        chLang = "c";
+				    }
+				    else if(lang == "P")
+				    {
+				        chLang = "cpp";
+				    }
+				   	else if(lang == "A")
+			    	{
+			        chLang = "abap";
+			    	}
+	
+				    changeStyle(chLang);
+				    
+				    if(lang != "A") {
+				    	lastLangSourceLoad(lang);			    	
+				    } else {
+				    	getSapInfo();
+				    }
+				} else {
+					 $("input:radio[name=lang][value=" + prevSelCodeLang + "]").attr("checked", "checked");
+				}
+			});
+    	} else {
+			prevSelCodeLang = lang;
+			   
+			var chLang = "";
+			   
+			if(lang == "J")
+			{
+				chLang = "java";
+			}
+			else if(lang == "C")
+			{
+				chLang = "c";
+			}
+			else if(lang == "P")
+			{
+				chLang = "cpp";
+			}
+			else if(lang == "A")
+			{
+				chLang = "abap";
+			}
+			
+			changeStyle(chLang);
+			   
+			if(lang != "A") {
+				lastLangSourceLoad(lang); 				    	
+			} else {
+				getSapInfo();
+			}
+		}  	    
+	}
+
+	function getSapInfo() {		
+		if(!isGetSapInfo) {
+			isGetSapInfo = true;
+			
+			var url = contextPath + "/satti/getSapInfo.do";
+		    $.ajax(
+		    {
+		        type : "POST",
+		        url : url,
+		        dataType : "json",
+		        success : function(json)
+		        {
+		        	if(json.result == "success") {
+		        		var programId = "";
+				    	
+		        		if("" != "")
+						   	programId = "_" + json.sapId;		
+										    	
+				    	var msg = "SAP ID : " + json.sapId + "<br><br>SAP PW : " + json.sapPw + "<br><br>PROGRAM ID : " + programId;
+				    	var comment = "[Notice]<br><br>- Login the SAP GUI using this SAP ID and SAP PW<br><br>- Search the program in SAP GUI using this PROGRAM ID <br><br>- Confirm the ABAP source code.<br><br><font color='red' style='font-weight: bold'>- Confirm the manual. ( FAQ -> How to user external tools )</font>";
+				    
+				    	bootbox.alert("SAP Information", "SAP Information", "2", msg.replace("\n", "<br>") + "<br><br><br>" + comment.replace("\n", "<br>"), function(result) {
+				    		isGetSapInfo = false;
+						});	
+		        	} else {
+		        		bootbox.alert("There is no ABAP information.<br>Please contact your administrator.", "SAP Information", "5", null, function(result) {
+		        			isGetSapInfo = false;	
+		    			});
+		        	}	        	
+		        },
+		        error : function(request, err, ex)
+		        {
+		        	bootbox.alert("Getting ABAP information was failed.", "SAP Information", "4", null, function(result) {
+		        		isGetSapInfo = false;
+	    			});
+		        }
+		    });
+		}
+	}
+	
+	function clearArea()
+	{
+	    var fileData = document.getElementById('fileData');
+	    if(navigator.userAgent.indexOf("MSIE") != -1)
+	    {
+	        // document.contestForm.reset();
+	    }
+	    else
+	    {
+	        fileData.value = "";
+	    }
+	}
+
+	// 편집창 변경
+	function onEditChange()
+	{
+		isEditChange = true;
+	}
+
+	// 임시저장 처리
+	function onEditSave()
+	{
+		var lang = "";
+		var langObj = document.getElementsByName("lang");
+        
+        for(var i = 0; i < langObj.length; i++)
+        {
+            if(langObj[i].checked == true)
+            {
+                lang = langObj[i].value;
+            }
+        }
+	    
+	    if(lang == "A")
+	    	return ;
+		
+// 	    var value = editAreaLoader.getValue("textSource");
+		var value = cEditor.getValue();
+		
+		var buttonName = "Save";
+		
+		if(calculate_msglen(value) > 131072){
+			bootbox.alert("Your source code  has been exceeded 128KB. You have to write the source code within 128KB.", buttonName, "4", null, function(result) {
+					//return false;
+			});
+			//pop_alert("Your source code  has been exceeded 128KB. You have to write the source code within 128KB.",buttonName,"5");
+		}
+
+		
+	    var langObj = document.getElementsByName("lang");
+	    var codeLangCd = "";
+	    for(var i = 0; i < langObj.length; i++)
+	    {
+	        if(langObj[i].checked)
+	        {
+	            codeLangCd = langObj[i].value;
+	            break;
+	        }
+	    }
+
+	    var contestId = document.contestForm.contestId.value;
+	    var contestProbId = document.contestForm.contestProbId.value;
+
+	    var params =
+	    {
+	        submitCode : value,
+	        codeLangCd : codeLangCd,
+	        contestId : contestId,
+	        contestProbId : contestProbId,
+	        solveStatusCd : "T"
+	    };
+
+	    var url = contextPath + "/satti/insertTempSource.do";
+	    $.ajax(
+	    {
+	        type : "POST",
+	        url : url,
+	        data : params,
+	        success : function(ret)
+	        {
+	            if(ret.success == 'Y')
+	            {
+	                isEditChange = false;
+	                bootbox.alert("Saved.", buttonName, "2",null, function(result) {
+	    					//return false;
+	    			});
+	                //pop_alert("Saved.",buttonName,"5");
+	            }
+	        },
+	        error : function(request, err, ex)
+	        {
+	            hideLoading();
+	            bootbox.alert(err + " ===> " + ex,buttonName,"4", null, function(result) {
+				});
+	            //pop_alert(err + " ===> " + ex,buttonName,"5");
+	        }
+	    });
+
+	    return false;
+	}
+
+	// 컴파일 처리
+	function onEditCompile()
+	{
+		var lang = "";
+		var langObj = document.getElementsByName("lang");
+        
+        for(var i = 0; i < langObj.length; i++)
+        {
+            if(langObj[i].checked == true)
+            {
+                lang = langObj[i].value;
+            }
+        }
+	    
+	    if(lang == "A")
+	    	return ;
+		
+		$("#btnf_compile").attr("onClick","return false;");
+		
+// 	    var value = editAreaLoader.getValue("textSource");
+		var value = cEditor.getValue();
+		
+		var buttonName = "Compile";
+		
+	    if(value == "")
+	    {
+	        //editAreaLoader.setValue("textSource", "");
+	        bootbox.alert("No source code input", buttonName, "5", null, function(result) {
+					//return false;
+	        	//$("#btnf_compile").removeAttr("disabled");
+	        	$("#btnf_compile").attr("onClick","return onEditCompile();");
+			});
+	        //pop_alert("No source code input",buttonName,"5");
+	        //return false;
+	    }
+	    else
+	    {
+	    	if(calculate_msglen(value) > 131072){
+	    		 bootbox.alert("Your source code  has been exceeded 128KB. You have to write the source code within 128KB.", buttonName, "5", null, function(result) {
+	 					//return false;
+	    			 //$("#btnf_compile").removeAttr("disabled");
+	    			 $("#btnf_compile").attr("onClick","return onEditCompile();");
+	 			});
+	    		/* pop_alert("Your source code  has been exceeded 128KB. You have to write the source code within 128KB.",buttonName,"5");
+			    return false; */
+			}
+	    	
+	        var fileData = document.getElementById("fileData");
+	        var fileName = fileData.value;
+	        var langType = "";
+	        if(fileName == "")
+	        {
+	            var langObj = document.getElementsByName("lang");
+	            langType = "";
+	            for(var i = 0; i < langObj.length; i++)
+	            {
+	                if(langObj[i].checked)
+	                {
+	                    langType = langObj[i].value;
+	                    break;
+	                }
+	            }
+	            if(langType == "J")
+	            {
+	                langType = "java";
+	            }
+	            else if(langType == "C")
+	            {
+	                langType = "c";
+	            }
+	            else
+	            {
+	                langType = "cpp";
+	            }
+	        }
+	        else
+	        {
+	            var fileNm = fileName.substr(fileName.lastIndexOf("\\") + 1);
+	            fileName = fileNm.substr(0, fileNm.lastIndexOf("."));
+	            langType = fileNm.substr(fileNm.lastIndexOf(".") + 1);
+	        }
+
+	        var contestId = document.contestForm.contestId.value;
+	        var probId = document.contestForm.contestProbId.value;
+
+	        showLoading(false, contextPath + "/images/common/loading5.gif", 90, 84);
+	        var params =
+	        {
+	            source : value,
+	            langType : langType,
+	            fileName : fileName,
+	            contestId : contestId,
+	            probId : probId
+	        };
+	        
+	        var url = contextPath + "/commonCompileRun/compile.do";
+	        $.ajax(
+	        {
+	            type : "POST",
+	            url : url,
+	            data : params,
+	            dataType : "json",
+	            success : function(json)
+	            {
+	                hideLoading();
+	                
+	                var vo = json.vo;
+					
+	                if(json.result == "success"){
+	                	// TODO 컴파일 리턴
+		                if(vo.exitValue == "0")
+		                {
+		                	bootbox.alert("Successfully Compiled.", buttonName,"2",null, function(result) {
+		                		//$("#btnf_compile").removeAttr("disabled");
+		                		$("#btnf_compile").attr("onClick","return onEditCompile();");
+		        			});
+		                	//pop_alert("Successfully Compiled.",buttonName,"5");
+		                }
+		                else
+		                {
+		                    if(vo.exitValue == "H")
+		                    {
+		                    	bootbox.alert("Compile Error", buttonName, "4", vo.cmpError, function(result) {
+		                    		//$("#btnf_compile").removeAttr("disabled");
+		                    		$("#btnf_compile").attr("onClick","return onEditCompile();");
+		            			});
+		                    	//pop_alert2("Compile Error",vo.cmpError,buttonName,"5");
+		                    }
+		                    else if(vo.exitValue == "EB")
+		                    {
+		                    	bootbox.alert("Your source code  has been exceeded 128KB. You have to write the source code within 128KB.", buttonName,"4" , null, function(result) {
+		                    		//$("#btnf_compile").removeAttr("disabled");
+		                    		$("#btnf_compile").attr("onClick","return onEditCompile();");
+		            			});
+		                    	//pop_alert2("Compile Error","Your source code  has been exceeded 128KB. You have to write the source code within 128KB.",buttonName,"5");
+		                    }
+		                    else if(vo.exitValue == "NS")
+		                    {
+			                	var alertMgt ="";
+			                	if('IT' == 'IG')
+			                	{
+			                		alertMgt = "You can only use standard input/output library \n";
+			                	}
+			                	bootbox.alert("Compile Error", buttonName, "4" ,alertMgt+"The library used is not allowed.\n >" + vo.cmpError,function(result) {
+			                		//$("#btnf_compile").removeAttr("disabled");
+			                		//return false;
+			                		$("#btnf_compile").attr("onClick","return onEditCompile();");
+		            			});
+			                	//pop_alert2("Compile Error",alertMgt+"The library used is not allowed.\n >" + vo.cmpError,buttonName,"5");
+			                    //return false;
+		                    }
+		                    else if(vo.exitValue == "FI")
+		                    {
+		                    	bootbox.alert("Compile Error", buttonName, "4", "The file input method is used. \n> " + vo.cmpError+"\n(You should just use standard input/output.)", function(result) {
+		                    		//$("#btnf_compile").removeAttr("disabled");
+		                    		$("#btnf_compile").attr("onClick","return onEditCompile();");
+		                    	});
+		                    	//pop_alert2("Compile Error","The file input method is used. \n> " + vo.cmpError+"\n(You should just use standard input/output.)",buttonName,"5");
+		                    }
+		                    else if(vo.exitValue == "UP")
+		                    {
+		                    	bootbox.alert("Compile Error", buttonName, "4", "Package has been declared in the next line. Package declaration cannot be used. \n> " + vo.cmpError+"\n(Package word cannot be used.)", function(result) {
+		                    		//$("#btnf_compile").removeAttr("disabled");
+		                    		$("#btnf_compile").attr("onClick","return onEditCompile();");
+		                    	});
+		                    }
+		                    else if(vo.exitValue == "UPA")
+		                    {
+		                    	
+		                    	if(vo.langType == "java"){
+		                    		bootbox.alert("Compile Error", buttonName, "4", "The class used is not allowed. \n> " + vo.cmpError, function(result) {
+			                    		$("#btnf_compile").attr("onClick","return onEditCompile();");
+				        			});
+		                    	} else {
+		                    		bootbox.alert("Compile Error", buttonName, "4", "The function used is not allowed. \n> " + vo.cmpError, function(result) {
+			                    		$("#btnf_compile").attr("onClick","return onEditCompile();");
+				        			});
+		                    	}
+		                    	//pop_alert2("Submit Error","System call function cannot be used. \n> " + vo.cmpError,buttonName,"5");
+		                    }
+		                    else if(vo.exitValue == "SC")
+		                    {
+		                    	bootbox.alert("Compile Error", buttonName, "4", "System call function cannot be used. \n> " + vo.cmpError, function(result) {
+		                    		//$("#btnf_compile").removeAttr("disabled");
+		                    		$("#btnf_compile").attr("onClick","return onEditCompile();");
+		                    	});
+		                    	//pop_alert2("Compile Error","System call function cannot be used. \n> " + vo.cmpError,buttonName,"5");
+		                    }
+		                    else
+		                    {
+		                    	bootbox.alert("Compile Error", buttonName, "4", "Compile Error: \nError Message : \n" + vo.cmpError, function(result) {
+		                    		//$("#btnf_compile").removeAttr("disabled");
+		                    		$("#btnf_compile").attr("onClick","return onEditCompile();");
+		                    	});
+		                    	//pop_alert2("Compile Error","Compile Error: \nError Message : \n" + vo.cmpError,buttonName,"5");
+		                    }
+		                }
+	                } else {
+	                	bootbox.alert("Server Error", buttonName,"4", null, function(result) {
+	                		//$("#btnf_compile").removeAttr("disabled");
+	                		$("#btnf_compile").attr("onClick","return onEditCompile();");
+            			});
+	                	//pop_alert("Server Error",buttonName,"5");
+	                }
+	               
+	            },
+	            error : function(request, err, ex)
+	            {
+	                hideLoading();
+	                bootbox.alert(err + " ===> " + ex, buttonName, "4", null, function(result) {
+	                	//$("#btnf_compile").removeAttr("disabled");
+	                	$("#btnf_compile").attr("onClick","return onEditCompile();");
+        			});
+	                //pop_alert(err + " ===> " + ex,buttonName,"5");
+	            }
+	        });
+	    }
+	    return false;
+	}
+
+	function getLangType() {
+		var langObj = document.getElementsByName("lang");
+        langType = "";
+
+        for(var i = 0; i < langObj.length; i++)
+        {
+            if(langObj[i].checked)
+            {
+                langType = langObj[i].value;
+                break;
+            }
+        }
+
+        return langType;
+	}
+	
+	// 제출 처리
+	function onEditSubmit()
+	{
+		$("#btnf_proposal").attr("onClick","return false;");
+		var languageType = getLangType();
+		var langObj = document.getElementsByName("lang");
+		
+		var contestId = document.contestForm.contestId.value;
+	    var probId = document.contestForm.contestProbId.value;
+	    	    
+	    var value = "";
+	    
+	    if(languageType != "A") {
+	    	value = cEditor.getValue();
+	    }
+	    
+	    var buttonName = "Submit";
+	    
+	    // 제출 시 아밥시험의 경우 빈 소스코드에 대한 예외처리를 하지 않는다.
+	    if(languageType != "A") {
+		    if(value == "")
+		    {
+		    	bootbox.alert("No source code input", buttonName, "5", null, function(result) {
+						//return false;
+		    		$("#btnf_proposal").attr("onClick","return onEditSubmit();");
+				});
+		    	//pop_alert("No source code input",buttonName,"5");
+		        return false;
+		    }
+	    }
+	    
+    	if(calculate_msglen(value) > 131072){
+    		bootbox.alert("Your source code  has been exceeded 128KB. You have to write the source code within 128KB.", buttonName, "5", null, function(result) {
+					//return false;
+    			$("#btnf_proposal").attr("onClick","return onEditSubmit();");
+			});
+    		//pop_alert("Your source code  has been exceeded 128KB. You have to write the source code within 128KB.",buttonName,"5");
+		    return false; 
+		}
+
+	    var fileData = document.getElementById("fileData");
+	    var fileName = fileData.value;
+	    var langType = "";
+	    if(fileName == "")
+	    {
+	        var langObj = document.getElementsByName("lang");
+	        langType = "";
+
+	        for(var i = 0; i < langObj.length; i++)
+	        {
+	            if(langObj[i].checked)
+	            {
+	                langType = langObj[i].value;
+	                break;
+	            }
+	        }
+
+	        if(langType == "J")
+	        {
+	            langType = "java";
+	        }
+	        else if(langType == "C")
+	        {
+	            langType = "c";
+	        }
+	        else if(langType == "P")
+	        {
+	            langType = "cpp";
+	        }
+	        else if(langType == "A")
+	        {
+	        	langType = "abap";	
+	        }
+	    }
+	    else
+	    {
+	        var fileNm = fileName.substr(fileName.lastIndexOf("\\") + 1);
+	        fileName = fileNm.substr(0, fileNm.lastIndexOf("."));
+	        langType = fileNm.substr(fileNm.lastIndexOf(".") + 1);
+	    }
+
+	    var params =
+	    {
+	        source : value,
+	        langType : langType,
+	        fileName : fileName,
+	        contestId : contestId,
+	        probId : probId,
+	        limitSubmit : "10"
+	    };
+
+	    showLoading(false, contextPath + "/images/common/loading5.gif", 90, 84);
+
+	    if(languageType != "A") {
+	    	var url = contextPath + "/commonCompileRun/compile.do";
+		    $.ajax(
+		    {
+		        type : "POST",
+		        url : url,
+		        data : params,
+		        dataType : "json",
+		        success : function(json)
+		        {
+		            hideLoading();
+		            
+		            if(json.result == "success"){
+		            	var vo = json.vo;
+						
+			            // TODO 컴파일 리턴
+			            if(vo.exitValue == "0")
+			            {
+			            	
+			            	var limitSubmit = "10";
+			            	
+			            	//신입검정 일 때, (제출 제한 없을 시)
+			            	if(limitSubmit == '-1'){
+				            	bootbox.alert("Successfully Compiled.", buttonName, "2", null, function() {
+			            			if(!isSubmit){
+			            				isSubmit=true;
+			            				$("#btnarea").hide();
+						                showLoading(false, contextPath + "/images/common/loading5.gif", 90, 84);
+						                url = contextPath + "/commonCompileRun/submit.do";
+						                $.ajax(
+						                {
+						                    type : "POST",
+						                    url : url,
+						                    data : params,
+						                    dataType : "json",
+						                    success : function(json)
+						                    {
+						                        hideLoading();
+						                        
+						                        if(json.result == "success"){
+						                        	
+						                        	$("#btnarea").show();
+							                        processSubmit(json);
+						                        } else {
+						                        	$("#btnarea").show();
+						                        	bootbox.alert("Server Error", buttonName, "4", null, function(result) {
+						                        		$("#btnf_proposal").attr("onClick","return onEditSubmit();");
+						                        		isSubmit=false;
+						                			});
+						                        	//pop_alert("Server Error",buttonName,"5");
+						                        }
+						                        
+						                    },
+						                    error : function(request, err, ex)
+						                    {
+						                        hideLoading();
+						                        $("#btnarea").show();
+						                        bootbox.alert("Submit Error",buttonName, "4", err + " ===> " + ex, function(result) {
+						                        	$("#btnf_proposal").attr("onClick","return onEditSubmit();");
+						                        	isSubmit=false;
+						            			});
+						                        //pop_alert2("Submit Error",err + " ===> " + ex,buttonName,"5");
+						                    }
+						                });
+			            			}
+			    				});
+			            	}else{
+					            	bootbox.alert("Successfully Compiled.", buttonName, "2", null, function(result) {
+					            		
+				    					var msg = "Submission chance will reduce by 1.\nAre you sure you want to submit?";
+		
+							 			bootbox.confirm(msg, "Submit", function(result) {
+							 				setTimeout("",500);
+							 				if(result && !isSubmit){
+							 					isSubmit=true;
+								                $("#btnarea").hide();
+								                showLoading(false, contextPath + "/images/common/loading5.gif", 90, 84);
+								                url = contextPath + "/commonCompileRun/submit.do";
+								                $.ajax(
+								                {
+								                    type : "POST",
+								                    url : url,
+								                    data : params,
+								                    dataType : "json",
+								                    success : function(json)
+								                    {
+								                        hideLoading();
+								                        
+								                        if(json.result == "success"){
+								                        	
+								                        	$("#btnarea").show();
+									                        processSubmit(json);
+								                        } else {
+								                        	$("#btnarea").show();
+								                        	bootbox.alert("Server Error", buttonName, "4", null, function(result) {
+								                        		$("#btnf_proposal").attr("onClick","return onEditSubmit();");
+								                        		isSubmit=false;
+								                			});
+								                        	//pop_alert("Server Error",buttonName,"5");
+								                        }
+								                        
+								                    },
+								                    error : function(request, err, ex)
+								                    {
+								                        hideLoading();
+								                        $("#btnarea").show();
+								                        bootbox.alert("Submit Error",buttonName, "4", err + " ===> " + ex, function(result) {
+								                        	$("#btnf_proposal").attr("onClick","return onEditSubmit();");
+								                        	isSubmit=false;
+								            			});
+								                        //pop_alert2("Submit Error",err + " ===> " + ex,buttonName,"5");
+								                    }
+								                });
+							 				}else{
+							 					isSubmit=false;
+							 					$("#btnf_proposal").attr("onClick","return onEditSubmit();");
+							 				}
+							 			});
+				    			});
+			            	}			            	
+			            }
+			            else
+			            {
+			                if(vo.exitValue == "H")
+			                {
+			                	bootbox.alert("Submit Error", buttonName, "4", vo.cmpError, function(result) {
+			        					//return false;
+			                		$("#btnf_proposal").attr("onClick","return onEditSubmit();");
+			        			});
+			                	//pop_alert2("Submit Error",vo.cmpError,buttonName,"5");
+			                    return false;
+			                }
+			                else if(vo.exitValue == "EB")
+		                    {
+			                	bootbox.alert("Your source code  has been exceeded 128KB. You have to write the source code within 128KB.", buttonName, "5", null, function(result) {
+			                		$("#btnf_proposal").attr("onClick","return onEditSubmit();");
+			        			});
+			                	//pop_alert("Your source code  has been exceeded 128KB. You have to write the source code within 128KB.",buttonName,"5");
+		                    }
+			                else if(vo.exitValue == "NS")
+			                {
+			                	var alertMgt ="";
+			                	if('IT' == 'IG')
+			                	{
+			                		alertMgt = "You can only use standard input/output library \n";
+			                	}
+			                	bootbox.alert("Submit Error", buttonName, "4", alertMgt+"The library used is not allowed. \n > " + vo.cmpError, function(result) {
+			        					 //return false;
+			                		$("#btnf_proposal").attr("onClick","return onEditSubmit();");
+			        			});
+			                	//pop_alert2("Submit Error",alertMgt+"The library used is not allowed.\n >" + vo.cmpError,buttonName,"5");
+			                    return false;
+			                }
+		                    else if(vo.exitValue == "FI")
+		                    {
+		                    	bootbox.alert("Submit Error", buttonName, "4", "The file input method is used. \n> " + vo.cmpError+"\n(You should just use standard input/output.)", function(result) {
+		                    		$("#btnf_proposal").attr("onClick","return onEditSubmit();");
+			        			});
+		                    	//pop_alert2("Submit Error","The file input method is used. \n> " + vo.cmpError+"\n(You should just use standard input/output.)",buttonName,"5");
+		                    }
+		                    else if(vo.exitValue == "UP")
+		                    {
+		                    	bootbox.alert("Submit Error", buttonName, "4", "Package has been declared in the next line. Package declaration cannot be used. \n> " + vo.cmpError+"\n(Package word cannot be used.)", function(result) {
+		                    		$("#btnf_proposal").attr("onClick","return onEditSubmit();");
+		            			});
+		                    }
+		                    else if(vo.exitValue == "SC")
+		                    {
+		                    	bootbox.alert("Submit Error", buttonName, "4", "System call function cannot be used. \n> " + vo.cmpError, function(result) {
+		                    		$("#btnf_proposal").attr("onClick","return onEditSubmit();");
+			        			});
+		                    	//pop_alert2("Submit Error","System call function cannot be used. \n> " + vo.cmpError,buttonName,"5");
+		                    }
+		                    else if(vo.exitValue == "UPA")
+		                    {
+		                    	
+		                    	if(vo.langType == "java"){
+		                    		bootbox.alert("Submit Error", buttonName, "4", "The class used is not allowed. \n> " + vo.cmpError, function(result) {
+			                    		$("#btnf_proposal").attr("onClick","return onEditSubmit();");
+				        			});
+		                    	} else {
+		                    		bootbox.alert("Submit Error", buttonName, "4", "The function used is not allowed. \n> " + vo.cmpError, function(result) {
+			                    		$("#btnf_proposal").attr("onClick","return onEditSubmit();");
+				        			});
+		                    	}
+		                    	//pop_alert2("Submit Error","System call function cannot be used. \n> " + vo.cmpError,buttonName,"5");
+		                    }
+			                else
+			                {
+			                	bootbox.alert("Submit Error", buttonName, "4", "Compile Error: \nError Message : \n" + vo.cmpError, function(result) {
+			        					//return false;
+			                		$("#btnf_proposal").attr("onClick","return onEditSubmit();");
+			        			});
+			                	//pop_alert2("Submit Error","Compile Error: \nError Message : \n" + vo.cmpError,buttonName,"5");
+			                    return false;
+			                }
+			            }
+		            } else {
+		            	bootbox.alert("Server Error", buttonName, "4", null, function(result) {
+	        					//return false;
+		            		$("#btnf_proposal").attr("onClick","return onEditSubmit();");
+	        			});
+		            	//pop_alert("Server Error",buttonName,"5");
+		            	return false;
+		            }
+		            
+		            
+		        },
+		        error : function(request, err, ex)
+		        {
+		            hideLoading();
+		            bootbox.alert(err + " ===> " + ex, buttonName, "4", null, function(result) {
+	    					//return false;
+		            	$("#btnf_proposal").attr("onClick","return onEditSubmit();");
+	    			});
+		            //pop_alert2("Submit Error",err + " ===> " + ex,buttonName,"5");
+		            return false;
+		        }
+		    });
+	    } else {
+	    	url = contextPath + "/commonCompileRun/abapSubmit.do";
+            $.ajax(
+            {
+                type : "POST",
+                url : url,
+                data : params,
+                dataType : "json",
+                success : function(json)
+                {
+                	hideLoading();
+                	
+                	if(json.result == "success"){
+                		processAbapSubmit(json);
+                	} else if(json.result == "fail") {
+                		var msgHead = "";
+                    	var message = "";
+                    	 
+                    	if(json.errorMsg != null) {
+                    		var msg = json.errorMsg.toString();
+                    		/*
+                    		2016-05-02 김효연 책임 요청으로 abap에서 보낸 메세지만 출력하게 변경
+                    		if(msg.indexOf("Time limit exceeded") != -1) {
+                    			message += "Time out! Check you ABAP source code.<br>";
+                    		}
+                    		
+    						if(msg.indexOf("Screen output without connection to user") != -1) {
+    							message += "Wrong output! Check your ABAP source code.<br>";
+                    		}
+    						
+    						if(msg.indexOf("No memory available") != -1) {
+    							message += "Memory error! Check your ABAP source code.<br>";
+                    		}
+    						*/
+    						message += msg;
+    						msgHead = "Submission of failure";
+    						
+                    	} else {
+                    		if(json.errorCode != null) {
+                    			message += json.errorCode;	
+                    		}
+                    		
+                    		if(json.errorKey != null) {
+                    			message += json.errorKey;
+                    		}
+                    		
+                    		if(json.exceptionMsg != null) {
+                    			message += json.exceptionMsg;
+                    		}
+                    		
+                    		msgHead = "Submit was failed because of server error";
+                    	}
+                    	
+                    	bootbox.alert(msgHead, buttonName, "4", message, function(result) {
+                        	$("#btnf_proposal").attr("onClick", "return onEditSubmit();");
+                        	isSubmit=false;
+            			});
+                    } else {
+                       	bootbox.alert("You don't have authorization", buttonName, "4", null, function(result) {
+                           	$("#btnf_proposal").attr("onClick", "return onEditSubmit();");
+                           	isSubmit=false;
+               			});
+                    }
+                },
+                error : function(request, err, ex)
+                {
+                    hideLoading();
+                    bootbox.alert("Submit Error", buttonName, "4", null, function(result) {
+                    	$("#btnf_proposal").attr("onClick", "return onEditSubmit();");
+                    	isSubmit=false;
+        			});
+                }
+            });
+	    }
+	    
+	    return false;
+	}
+
+	// 제출 리턴처리
+	function processAbapSubmit(json)
+	{
+		if(json.submitFailed != "")
+	    {
+	        //submit 불가능한 경우
+	        var submitFailStr = "";
+	        
+	        if(json.submitFailed == "ES")
+	        {
+	            submitFailStr = "No more submission chance";
+	            bootbox.alert("Unable to submit. \n" + submitFailStr,"Submit", "5", null, function(result) {
+    				goContestAfterSubmit();
+    			});
+	            
+	            return false;
+	        }
+	        else if(json.submitFailed == "TU")
+	        {
+	            submitFailStr = "Time is up.";
+	            bootbox.alert("Unable to submit. \n" + submitFailStr,"Submit", "5", null, function(result) {
+    				goContestAfterSubmit();
+    			});
+	            
+	            return false;
+	        }
+	        else if(json.submitFailed == "AP")
+	        {
+	            submitFailStr = "You've already passed.";
+	            bootbox.alert("Unable to submit. \n" + submitFailStr,"Submit", "5", null, function(result) {
+    				goContestAfterSubmit();
+    			});
+	            
+	            return false;
+	        }	        
+	    }
+	    
+	    var vo = json.vo;
+	    
+	    if('IT' == 'AT') {
+	    	//if('1' == '1') {
+	    	if('Y' == 'Y') {
+	    		
+	    		if(parseInt(vo.usrScore) >= parseInt(vo.passScore)) {	    			
+	    			bootbox.alert(getMessageProblemSumitPass(vo), "Submit", "2", null, function(result) {
+    					goContestAfterSubmit();
+	    			});
+	    		} else {
+	    			var usrScore = vo.usrScore;
+	    			
+	    			if(usrScore == "" || usrScore == null) {
+	    				usrScore = 0;
+	    			}
+	    			
+	    			var message = "Submission is finished. but wrong answer. ";
+	    			/*
+                    2016-05-02 
+                    제출하였으나 오류가 나온경우 abap메시지를 그대로 노출
+                    */
+                    if(json.errorMsg != null) {
+                    	message += "<br />";
+                        message += json.errorMsg.toString();
+                    }
+	    			
+	    			message += "<br /><br />";
+	    				    			
+	    			if(vo.testCaseNo != null && vo.testCaseNo != "0" && vo.testCaseNo != "") {
+	    				message += "" + vo.correctedCases +" cases were correct out of  "+ vo.testCaseNo + " test cases.";
+	    			} else {
+	    				message += "" + usrScore + " / 100";
+	    			}
+	    			
+	    			if(vo.sessionOver != null) {
+		    			message += "<br /><br />";
+		    			
+		        		if(vo.sessionOver == "Y") {
+		        			message += "- You don't have enough permission to access this PROGRAM in SAP GUI.<br>- Please login again into the SAP GUI.";
+		        		} else {
+		        			message += "Disconnecting the session was failed. Please contact your administrator.";
+		        		}
+		        	}
+	    			
+	    			
+	    			
+	    			bootbox.alert("Wrong answer", "Submit", "4", message, function(result) {
+	    				goProblemAfterSubmit();
+	    			});
+	    		}
+	    	} else {
+	    		var usrScore = vo.usrScore;
+    			
+    			if(usrScore == "" || usrScore == null) {
+    				usrScore = 0;
+    			}
+    			
+    			var title = "Submission is finished."
+    			var msgHead = "Submit";
+    			var buttonName = "Submit";
+    			var buttonStatus = "6";
+    			if (usrScore == 0) {
+    				title = "Submission is finished. but wrong answer. ";
+    				msgHead = "Wrong answer";
+    				buttonName = "Submit";
+    				buttonStatus = "4";
+    			}
+	    		
+    			var message = title;
+    			
+    			message += "<br><br>";
+    			
+    			 if(json.errorMsg != null) {
+                     message += "<br>";
+                     message += json.errorMsg.toString();
+                 }
+    			 message += "<br><br>";
+    			 
+	    		if(vo.testCaseNo != null && vo.testCaseNo != "0" && vo.testCaseNo != "") {
+    				message += "" + vo.correctedCases +" cases were correct out of  "+ vo.testCaseNo + " sample test cases.";
+    			} else {
+    				message += "" + usrScore + " / 100";
+    			}
+	    		
+	    		if (usrScore > 0) {
+		    		message += "<br><br>";
+		    		
+		    		message += "<font color='#8904b1'>This result above is provided with the aim of giving assistance for debugging and optimization.<br>";
+		    		message += "The final score will be calculated with the test case for scoring, and the final score may differ from the result above.<br>";
+		    		message += "The test case for scoring includes data that require an enhanced level of exception handling, and it has a larger number of test cases.</font>";
+	    		}
+	    		
+	    		if(vo.sessionOver != null) {
+	    			message += "<br><br>";
+	    			
+	        		if(vo.sessionOver == "Y") {
+	        			message += "- You don't have enough permission to access this PROGRAM in SAP GUI.<br>- Please login again into the SAP GUI.";
+	        		} else {
+	        			message += "Disconnecting the session was failed. Please contact your administrator.";
+	        		}
+	        	}
+	    		
+	    		bootbox.alert(msgHead, buttonName, buttonStatus, message, function(result) {
+    				goProblemAfterSubmit();
+    			});
+	    	}
+	    }
+	    
+	    return false;
+	}
+	
+	// 제출 리턴처리
+	function processSubmit(json)
+	{
+	    var vo = json.vo;
+	    
+	    var failString = "Fail";
+	    
+	    if('IT' == 'IT'){
+	    	failString = "The result using system input is fail.";
+	    } else if ('IT' == 'FT'){
+	    	failString = "Fail";
+	    }
+		
+	    if(json.submitFailed != "")
+	    {
+	        //submit 불가능한 경우
+	        var submitFailStr = "";
+	        if(json.submitFailed == "ES")
+	        {
+	            submitFailStr = "No more submission chance";
+	            bootbox.alert("Unable to submit. <br>" + submitFailStr,"Submit", "5", null, function(result) {
+    					goContestAfterSubmit();
+    			});
+	            //pop_alert2("Submit Error","Unable to submit. \n" + submitFailStr,"Submit","5");
+		        //goContestAfterSubmit();
+	        }
+	        else if(json.submitFailed == "TU")
+	        {
+	            submitFailStr = "Time is up.";
+	            bootbox.alert("Unable to submit. <br>" + submitFailStr,"Submit", "5", null, function(result) {
+    					goContestAfterSubmit();
+    			});
+	            //pop_alert2("Submit Error","Unable to submit. \n" + submitFailStr,"Submit","5");
+		        //goContestAfterSubmit();
+	        }
+	        else if(json.submitFailed == "AP")
+	        {
+	            submitFailStr = "You've already passed.";
+	            bootbox.alert("Unable to submit. <br>" + submitFailStr,"Submit", "5", null, function(result) {
+    					goContestAfterSubmit();
+    			});
+	            //pop_alert2("Submit Error","Unable to submit. \n" + submitFailStr,"Submit","5");
+		        //goContestAfterSubmit();
+	        }
+	    }
+	    
+	    
+	    if(vo.runError != "" && (vo.usrScore == "0" || vo.usrScore == "" || vo.usrScore == "0.0" || vo.usrScore == "0.00"))
+	    {
+	        //alert("실패 \n (오답)");
+	        
+	    	if('IT' == 'FT'){
+        		
+        		failString = "";
+        		
+        		if(vo.timeOut != "") {
+	            	failString += "Time out! All or some test cases can not be scored.<br>";
+        		} else if(vo.runError != "") {
+        			failString += "Runtime error! All or some test cases can not be scored.<br>";
+        			failString += "Error Message :<br>";
+        			failString += vo.runError.substring(0,255);
+        			failString += "<br><br>";
+        		} else {
+        			failString = "There is no correct output by given sample input.<br>";
+        		}
+        		
+        		if(vo.gradingResult != "" && vo.gradingResult != null){
+        			failString += "("+vo.gradingResult+") "+ "Unable to interpret the output from the code submitted.<br>";
+	        	}
+	            
+        		bootbox.alert("Submit Error","Submit", "4", failString, function(result) {
+	        		goProblemAfterSubmit();
+    					//return false;
+    			});
+	            
+	            return false;
+        		
+        	} else {
+        		var usrScore = vo.usrScore;
+	        	if(usrScore == "" || usrScore == null){
+	        		usrScore = "0";
+	        	}
+	            
+	            failString += "<br>(Wrong answer";
+
+       			if((vo.testCaseNo != null && vo.testCaseNo != "0" && vo.testCaseNo != ""))
+       			{
+           			failString += " : " + vo.correctedCases +" cases were correct out of  "+ vo.testCaseNo + " test cases.";
+       			}else{
+   	            	failString += ": "+ usrScore +" / 100.0";
+       			}
+	            failString += ")<br>";
+        		
+	            if(vo.timeOut != "") {
+	            	failString += "Time out! All or some test cases can not be scored.<br>";
+        		} else if(vo.runError != "") {
+        			failString += "Runtime error! All or some test cases can not be scored.<br>";
+        			failString += "Error Message :<br>";
+        			failString += vo.runError.substring(0,255);
+        			failString += "<br><br>";
+        		}
+	            
+	            // 응시자 Ouput이 #으로 시작하는지 체크
+	            if(('IT' == 'IT' || 'IT' == 'IG') && vo.existCharTC == 'not') {
+	            	failString += "your code produced some stardard output lines which is not starting with '#'. printing log through stardard output can affect scoring.<br>";
+	            }
+	            
+	            if(vo.gradingResult != "" && vo.gradingResult != null){
+	            	failString += "("+vo.gradingResult+") "+ "Unable to interpret the output from the code submitted.<br>";
+	        	}
+	            
+	            if('IT' == 'AT'){
+	            	 bootbox.alert("Wrong answer","Submit", "4", failString, function(result) {
+	         			goProblemAfterSubmit();
+	 					//return false;
+	 				});
+	            } else {
+	            	 bootbox.alert("Submit Error","Submit", "4", failString, function(result) {
+	         			goProblemAfterSubmit();
+	 					//return false;
+	 				});
+	            }
+	            
+	            return false;
+        	}
+	    }
+	    
+	    if(vo.runValue != "")
+	    {
+		    if(vo.timeOut != "" && vo.runValue.indexOf("Fail") != -1 
+		    		&& (vo.usrScore == "0" || vo.usrScore == "" || vo.usrScore == "0.0" || vo.usrScore == "0.00"))
+		    {
+		    	if('IT' == 'FT'){
+		    		failString = "Time out! All or some test cases can not be scored."
+		    	}else{
+		    		var usrScore = vo.usrScore;
+		        	if(usrScore == "" || usrScore == null){
+		        		usrScore = "0";
+		        	}
+		            //alert(ret.runValue);
+		            failString += "<br>(Wrong answer";
+
+	       			if((vo.testCaseNo != null && vo.testCaseNo != "0" && vo.testCaseNo != ""))
+	       			{
+	           			failString += " : " + vo.correctedCases +" cases were correct out of  "+ vo.testCaseNo + " test cases.";
+	       			}else{
+	   	            	failString += ": "+ usrScore +" / 100.0";
+	       			}
+		            failString += ")<br>";
+	        		
+		            if(vo.timeOut != "") {
+		            	failString += "Time out! All or some test cases can not be scored.<br>";
+	        		} else if(vo.runError != "") {
+	        			failString += "Runtime error! All or some test cases can not be scored.<br>";
+	        			failString += "Error Message :<br>";
+	        			failString += vo.runError.substring(0,255);
+	        			failString += "<br><br>";
+	        		}
+		            
+		            // 응시자 Ouput이 #으로 시작하는지 체크
+		            if(('IT' == 'IT' || 'IT' == 'IG') && vo.existCharTC == 'not') {
+		            	failString += "your code produced some stardard output lines which is not starting with '#'. printing log through stardard output can affect scoring.<br>";
+		            }
+		    	}
+		    	
+		    	if(vo.gradingResult != "" && vo.gradingResult != null){
+		    		failString += "("+vo.gradingResult+") "+ "Unable to interpret the output from the code submitted.<br>";
+	        	}
+		    	
+		    	if('IT' == 'AT'){
+	            	 bootbox.alert("Wrong answer","Submit", "4", failString, function(result) {
+	         			goProblemAfterSubmit();
+	 					
+	 				});
+	            } else {
+	            	 bootbox.alert("Submit Error","Submit", "4", failString, function(result) {
+	         			goProblemAfterSubmit();
+	 					
+	 				});
+	            }
+		    	
+		        return false;
+		    }
+		    
+	        //alert(ret.runValue);
+	        if(vo.runValue.indexOf("Accept") != -1 && (vo.usrScore != "0" || vo.usrScore != ""))
+	        {
+	            if('IT' == 'IT')
+	            {    	
+	            	bootbox.alert("Congratulations. You Passed.","Submit", "2", null, function(result) {
+	    					goContestAfterSubmit();
+	    					//return false;
+	    			});
+	                return false;
+	            }
+	            else if('IT' == 'FT')
+	            {
+	            	failString = "";
+	            	
+   		        	if(vo.timeOut != "") {
+   		            	failString += "Time out! All or some test cases can not be scored.<br>";
+   	        		} else if(vo.runError != "") {
+   	        			failString += "Runtime error! All or some test cases can not be scored.<br>";
+   	        			failString += "Error Message :<br>";
+   	        			failString += vo.runError.substring(0,255);
+   	        			failString += "<br><br>";
+   	        		} else {
+   	        			bootbox.alert("Submission is finished.", "Submit","2", null, function(result) {
+   	    					goContestAfterSubmit();
+   	    					//return false;
+   	    				});
+   		                return false;
+   	        		}
+   	        		
+   	        		if(vo.gradingResult != "" && vo.gradingResult != null){
+   	        			failString += "("+vo.gradingResult+") "+ "Unable to interpret the output from the code submitted.<br>";
+   		        	}
+   		            
+   	        		bootbox.alert("Submission is finished.","Submit", "2", failString, function(result) {
+   	        			goProblemAfterSubmit();
+   						//return false;
+   					});
+   		            
+   		            return false;
+	            }
+	            //else if('IT' == 'AT' && '1' == 1){
+	            else if('IT' == 'AT' && 'Y' == 'Y'){
+            		
+            		if (parseInt(vo.usrScore) >= parseInt(vo.passScore)) {
+            			bootbox.alert(getMessageProblemSumitPass(vo),"Submit", "2", null, function(result) {
+	    					goContestAfterSubmit();
+	    					//return false;
+		    			});
+		                return false;
+            		}else{
+            			var usrScore = vo.usrScore;
+    		        	if(usrScore == "" || usrScore == null){
+    		        		usrScore = "0";
+    		        	}
+    		            //alert(ret.runValue);
+    		            failString += "<br>(Wrong answer";
+
+    	       			if((vo.testCaseNo != null && vo.testCaseNo != "0" && vo.testCaseNo != ""))
+    	       			{
+    	           			failString += " : " + vo.correctedCases +" cases were correct out of  "+ vo.testCaseNo + " test cases.";
+    	       			}else{
+    	   	            	failString += ": "+ usrScore +" / 100.0";
+    	       			}
+    		            failString += ")<br>";
+    	        		
+    		            if(vo.timeOut != "") {
+    		            	failString += "Time out! All or some test cases can not be scored.<br>";
+    	        		} else if(vo.runError != "") {
+    	        			failString += "Runtime error! All or some test cases can not be scored.<br>";
+    	        			failString += "Error Message :<br>";
+    	        			failString += vo.runError.substring(0,255);
+    	        			failString += "<br><br>";
+    	        		}
+    		            
+    		            // 응시자 Ouput이 #으로 시작하는지 체크
+    		            if(('IT' == 'IT' || 'IT' == 'IG') && vo.existCharTC == 'not') {
+    		            	failString += "your code produced some stardard output lines which is not starting with '#'. printing log through stardard output can affect scoring.<br>";
+    		            }
+    		            
+    		            if(vo.gradingResult != "" && vo.gradingResult != null){
+    		            	failString += "("+vo.gradingResult+") "+ "Unable to interpret the output from the code submitted.<br>";
+    		        	}
+    		            
+    		            bootbox.alert("Wrong answer","Submit", "4", failString, function(result) {
+    	        			goProblemAfterSubmit();
+    						//return false;
+    					});
+    		            
+    		            return false;
+            		}
+	            }
+	            else
+	            {
+	            	var successMessage = "Submission is finished.";
+            		successMessage += "<br><br>";
+            		if(vo.testCaseNo == null || vo.testCaseNo == "0" || vo.testCaseNo == "")
+            		{
+            			if('IT' == 'IG')
+            			{
+            				successMessage += "Points acquired : " + vo.usrScore +" out of 100.0<br><br>";
+            			}
+            			else
+            			{
+            				successMessage += "Points acquired : " + vo.computeScore +" out of "+vo.probScore+"<br><br>";
+            			}
+            		}
+            		else
+            		{
+            			successMessage += "" + vo.correctedCases +" cases were correct out of  "+ vo.testCaseNo + " sample test cases.<br><br>";
+            		}
+            		
+            		if(vo.timeOut != "" ) {
+            			successMessage += "Time out! All or some test cases can not be scored.<br><br>";
+            		}else if(vo.runError != "") {
+            			successMessage += "Runtime error! All or some test cases can not be scored.<br>";
+            			successMessage += "Error Message :<br>";
+            			successMessage += vo.runError.substring(0,255);
+            			successMessage += "<br><br>";
+            		}
+            		
+            		if(vo.gradingResult != "" && vo.gradingResult != null){
+            			successMessage += "("+vo.gradingResult+") "+ "Unable to interpret the output from the code submitted.<br>";
+		        	}
+            		
+            		successMessage += "<font color='#8904b1'>This result above is provided with the aim of giving assistance for debugging and optimization.<br>";
+	            	successMessage += "The final score will be calculated with the test case for scoring, and the final score may differ from the result above.<br>";
+	            	successMessage += "The test case for scoring includes data that require an enhanced level of exception handling, and it has a larger number of test cases.</font>";
+            
+	            	if(('IT' == 'IT' || 'IT' == 'IG') && vo.existCharTC == 'not') {
+	            		successMessage += "<br><br>your code produced some stardard output lines which is not starting with '#'. printing log through stardard output can affect scoring.";
+		            }
+	            	
+	            	bootbox.alert("Submit","Submit", "6", successMessage, function(result) {
+	            			goProblemAfterSubmit();
+	    					//return false;
+	    			});
+	                return false;
+	            }
+	        }
+	        else
+	        {
+	        	if('IT' == 'FT'){
+	        		
+	        		failString = "";
+	        		
+	        		if(vo.timeOut != "") {
+		            	failString += "Time out! All or some test cases can not be scored.<br>";
+	        		} else if(vo.runError != "") {
+	        			failString += "Runtime error! All or some test cases can not be scored.<br>";
+	        			failString += "Error Message :<br>";
+	        			failString += vo.runError.substring(0,255);
+	        			failString += "<br><br>";
+	        		} else {
+	        			failString = "There is no correct output by given sample input.<br>";
+	        		}
+	        		
+	        		if(vo.gradingResult != "" && vo.gradingResult != null){
+	        			failString += "("+vo.gradingResult+") "+ "Unable to interpret the output from the code submitted.<br>";
+		        	}
+	        		
+	        	} else {
+	        		var usrScore = vo.usrScore;
+		        	if(usrScore == "" || usrScore == null){
+		        		usrScore = "0";
+		        	}
+		            
+		            failString += "<br>(Wrong answer";
+
+	       			if((vo.testCaseNo != null && vo.testCaseNo != "0" && vo.testCaseNo != ""))
+	       			{
+	           			failString += " : " + vo.correctedCases +" cases were correct out of  "+ vo.testCaseNo + " test cases.";
+	       			}else{
+	   	            	failString += ": "+ usrScore +" / 100.0";
+	       			}
+		            failString += ")<br>";
+	        		
+		            if(vo.timeOut != "") {
+		            	failString += "Time out! All or some test cases can not be scored.<br>";
+	        		} else if(vo.runError != "") {
+	        			failString += "Runtime error! All or some test cases can not be scored.<br>";
+	        			failString += "Error Message :<br>";
+	        			failString += vo.runError.substring(0,255);
+	        			failString += "<br><br>";
+	        		}
+		            
+		            // 응시자 Ouput이 #으로 시작하는지 체크
+		            if(('IT' == 'IT' || 'IT' == 'IG') && vo.existCharTC == 'not') {
+		            	failString += "your code produced some stardard output lines which is not starting with '#'. printing log through stardard output can affect scoring.<br>";
+		            }
+		            
+		            if(vo.gradingResult != "" && vo.gradingResult != null){
+		            	failString += "("+vo.gradingResult+") "+ "Unable to interpret the output from the code submitted.<br>";
+		        	}
+	        	}
+	        	
+	        	if('IT' == 'AT'){
+	            	 bootbox.alert("Wrong answer","Submit", "4", failString, function(result) {
+	         			goProblemAfterSubmit();
+	 					
+	 				});
+	            } else {
+	            	 bootbox.alert("Submit Error","Submit", "4", failString, function(result) {
+	         			goProblemAfterSubmit();
+	 					
+	 				});
+	            }
+	            
+	            return false;
+	        }
+	    }
+	}
+
+	function getMessageProblemSumitPass(vo) {
+		var message = "Congratulations. You Passed.";
+		if (vo.contestProbCnt > 1 && vo.contestProbTurn != 1) {
+			message += "<br />";
+			message += "But when the " + (parseInt(vo.contestProbTurn) - 1) + " problem reject, The whole process will fail. Be careful.";
+		}
+		return message;
+	}
+	
+	// 문제목록화면 이동
+	function goContest()
+	{
+	    if(isEditChange)
+	    {
+			bootbox.confirm("Do you want to move to other pages <br>without saving changed document?", "Return to the problem list", function(result) {
+				if(result){ 
+					document.MainForm.action = "/common/satti/contest.do";
+			        document.MainForm.submit();
+				 }
+			});	
+			return false;
+	    }else{
+	    	document.MainForm.action = "/common/satti/contest.do";
+	        document.MainForm.submit();
+		}
+	}
+
+	// 제출후 문제목록 화면이동
+	function goContestAfterSubmit()
+	{
+	    isEditChange = false;
+
+	    contestForm.target = "";
+	    contestForm.method = "post";
+	    contestForm.contestId.value = "AZLDx4gTEPI8b65q";
+	    contestForm.action = "/common/satti/contest.do";
+	    contestForm.submit();
+	}
+
+	// 제출후 문제풀기 화면이동
+	function goProblemAfterSubmit()
+	{
+	    isEditChange = false;
+
+	    MainForm.target = "";
+	    MainForm.method = "post";
+	    MainForm.contestId.value = "AZLDx4gTEPI8b65q";
+	    MainForm.contestProbId.value = "AZF9AAlQAmaoBghQ";
+	    MainForm.action = "/common/satti/problem.do";
+	    MainForm.submit();
+	}
+
+	// 응시종료
+	function goEndOnTime()
+	{
+		document.MainForm.contestId.value = "AZLDx4gTEPI8b65q";
+	    document.MainForm.action = "/common/satti/end.do";
+	    document.MainForm.submit();
+	}
+	
+	function layer_open(el){
+		//$('.layer').addClass('open');
+		$('#bg').height($('#wrap').height());
+		$('#bg').width($('#wrap').width());
+		$('#bg').fadeIn();
+		$('#answerLayer').fadeIn();
+		var temp = $('#' + el);
+		if (temp.outerHeight() < $(document).height() ) temp.css('margin-top', '-'+temp.outerHeight()/2+'px');
+		else temp.css('top', '0px');
+		if (temp.outerWidth() < $(document).width() ) temp.css('margin-left', '-'+temp.outerWidth()/2+'px');
+		else temp.css('left', '0px');
+	}
+	
+	function fn_answerLayerClose(){
+		$('#answerLayer').fadeOut();
+		$('#bg').fadeOut();
+		
+		return false;
+	}
+	
+	function pop_aboutEditor()
+	{
+		var url = "/common/satti/pop_aboutEditor.do?";
+		window.open(url,'abouteditor','top=100,left=350,width=370, height=364,scrollbars=yes,status=0,resizable=yes,menubar=0,toolbar=0,location=0,titlebar=0,directories=0,addressbar:0');
+	}
+	
+	function calculate_msglen(msg)
+	{
+	    var nbytes = 0;
+	    
+	    for (var i=0; i<msg.length; i++) {
+	     	
+	    	var ch = msg.charAt(i);
+	    	
+	     	if(escape(ch).length > 4) {
+	        	nbytes += 2;
+	     	} else if (ch == '\n') {
+	      		if (msg.charAt(i-1) != '\r') {
+	       			nbytes += 1;
+	     		}
+	     	} else {
+	     		nbytes += 1;
+	     	}
+	    }
+	    
+	    return nbytes;
+	}
+	
+	// 웹소켓 컴파일 부분 구현 시작
+	function onRun(){
+ 		$('#tab02').addClass('on').parent('li').siblings('li').find('a.on').removeClass('on');
+        $('#tab_content02').show().siblings('div.tab_content').hide();
+		
+        $('#tab02').blur();
+        
+ 		$("#btnarea").attr("disabled",true);
+ 		
+ 		var contestId = contestForm.contestId.value;
+ 		var probId = contestForm.contestProbId.value;
+ 		var value = cEditor.getValue();
+ 		
+ 		// test이면  true
+ 		var isTest = true;
+ 		var inputData = $('#input').val();
+        var rv = -1; // Return value assumes failure. 
+
+         	 if (navigator.appName == 'Microsoft Internet Explorer') {    
+                  var ua = navigator.userAgent;        
+                  var re = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");        
+                  if (re.exec(ua) != null)            
+                      rv = parseFloat(RegExp.$1);    
+                    if (rv <= 9){
+                       //alert("This system supports Internet Explorer 10 or later.");
+                       bootbox.alert("This system supports Internet Explorer 10 or later.", " ", "5", null, function(result) {
+	               			return;
+	              		});
+                 	   return false;
+                         }
+                 } 
+ 
+ 		if(value == "")
+	    {
+ 			
+ 			addCompileMsg("No source code input",null,"E");// 입력하신 소스코드가 없습니다.
+	        return false;
+	    }
+	    
+    	if(calculate_msglen(value) > 131072){
+    		addCompileMsg("Your source code  has been exceeded 128KB. You have to write the source code within 128KB.",null,"E"); // 소스코드가 128KB를 초과하였습니다. 128KB 내로 소스코드를 작성하세요.
+		    return false;
+		}
+    	
+
+    	if(calculate_msglen(inputData) > 102400){
+    		addCompileMsg("Your input data  has been exceeded 100KB. You have to write the input data within 100KB.",null,"E"); // Input Data가 100KB를 초과하였습니다. 100KB 내로 작성하세요.
+		    return false;
+		}
+    	
+	    var fileName = contestForm.fileData.value;
+	    var langType = "";
+	    if(fileName == "")
+	    {
+	        var langObj = contestForm.lang;
+	        langType = "";
+
+	        for(var i = 0; i < langObj.length; i++)
+	        {
+	            if(langObj[i].checked)
+	            {
+	                langType = langObj[i].value;
+	                break;
+	            }
+	        }
+
+	        if(langType == "J")
+	        {
+	            langType = "java";
+	        }
+	        else if(langType == "C")
+	        {
+	            langType = "c";
+	        }
+	        else if(langType == "P")
+	        {
+	            langType = "cpp";
+	        }
+	        else if(langType == "A")
+	        {
+	        	return false;	
+	        }
+	   	} else {
+	        var fileNm = fileName.substr(fileName.lastIndexOf("\\") + 1);
+	        fileName = fileNm.substr(0, fileNm.lastIndexOf("."));
+	        langType = fileNm.substr(fileNm.lastIndexOf(".") + 1);
+	   	}
+
+ 	   	var params =
+	   	{
+        	source : value,
+        	langType : langType,
+        	fileName : fileName,
+        	contestId : contestId,
+        	probId : probId,
+        	test : isTest,
+        	inputData : inputData,
+        	action : "compile"
+	   	};
+ 	   
+ 	  	showLoading(false, contextPath + "/images/common/loading5.gif", 90, 84);
+ 	  	
+ 	  	var jsonStr = JSON.stringify(params);
+ 	  	ws.send(jsonStr);	
+ 	  	
+ 	  	
+  		return false;
+ 	}
+	
+	// text 크기 체크
+ 	function calculate_msglen(msg)
+	{
+	    var nbytes = 0;
+	    
+	    for (var i=0; i<msg.length; i++) {
+	     	
+	    	var ch = msg.charAt(i);
+	    	
+	     	if(escape(ch).length > 4) {
+	        	nbytes += 2;
+	     	} else if (ch == '\n') {
+	      		if (msg.charAt(i-1) != '\r') {
+	       			nbytes += 1;
+	     		}
+	     	} else {
+	     		nbytes += 1;
+	     	}
+	    }
+	    return nbytes;
+	}
+ 	
+ 	// input text 초기화
+ 	function onInputReset(){
+ 		$('#input').val('');
+ 	}
+ 	
+ 	// output text 초기화
+ 	function onOutputReset(){
+ 		$('#output').html('');
+ 	} 	 	 	
+ 	
+ 	function toggleTest(){
+ 		var lang = "";
+		var langObj = document.getElementsByName("lang");
+        
+        for(var i = 0; i < langObj.length; i++)
+        {
+            if(langObj[i].checked == true)
+            {
+                lang = langObj[i].value;
+            }
+        }
+	    
+	    if(lang == "A")
+	    	return ;
+ 		
+ 		if($('#count_open2').css('display')=='none'){
+ 			Closebot();
+ 		}else{
+ 			Openbot();
+ 		}
+ 	}
+</script>
+
+
+<form id="MainForm" name="MainForm"  method="post" autocomplete="off">
+	<input type="hidden" name="contestId" id="contestId" value="AZLDx4gTEPI8b65q">
+	<input type="hidden" name="contestProbId" id="contestProbId" value="AZF9AAlQAmaoBghQ">
+	<input type="hidden" name="isPostMethod" value="Y">
+	<input type="hidden" name="do_url" value="/common/satti/problem.do">
+</form>
+
+<form name="contestForm" method="post"  enctype="multipart/form-data" autocomplete="off">
+	<input type="hidden" name="contestId" value="AZLDx4gTEPI8b65q">
+	<input type="hidden" name="contestProbId" value="AZF9AAlQAmaoBghQ">
+	<input type="hidden" name="isPostMethod" value="Y">
+
+	<div id="wrap">
+
+		
+
+<!-- globalmenu start -->
+
+<script>
+$(document).ready(function() {
+	var language = "en";
+	
+	if(language == "ko") {
+		$("#btnEnglish").removeClass();
+		$("#btnKorean").addClass("on");
+	} else {
+		$("#btnKorean").removeClass();
+		$("#btnEnglish").addClass("on");
+	}
+});
+</script>
+
+<ul class="globalmenu" style="position: fixed; float: right;z-index:999;">
+	<li class="user">FELIPE DOS SANTOS(6605234)</li>
+	<li><a id="btnKorean" href="http://105.112.12.30:8080/common/satti/problem.do#" class="" onclick="changeLang(&#39;ko&#39;)">KOREAN</a></li>
+	<li><a id="btnEnglish" href="http://105.112.12.30:8080/common/satti/problem.do#" onclick="changeLang(&#39;en&#39;)" class="on">ENGLISH</a></li>
+</ul>
+
+<!-- globalmenu end -->
+
+<!-- notify -->
+<div id="notifyDiv" class="notify_wrap" style="z-index:999">
+	<!-- <div class="notify" id="qna_1">
+    	<div class="notify_txt">
+            <a href="#">
+            <span class="title">질의응답 답변이 도착했습니다.</span>
+            <span class="message">답변내용 가나다라 마바사아 자차카타파하 길면 으로 표시됩니다.</span>
+            </a>
+        </div>
+        <span class="btn"><a href="javascript:layer_close('notify_1')" ><img src="../imgs/btn_close2.png" alt="닫기" /></a></span>
+    </div>
+    <div class="notify" id="qna_2">
+    	<div class="notify_txt">
+            <a href="#">
+            <span class="title">질의응답 답변이 도착했습니다.</span>
+            <span class="message">답변내용 가나다라 마바사아 자차카타파하 길면 으로 표시됩니다.</span>
+            </a>
+        </div>
+        <span class="btn"><a href="javascript:layer_close('notify_2')" ><img src="../imgs/btn_close2.png" alt="닫기" /></a></span>
+    </div> -->
+</div>
+<!-- //notify_wrap -->
+
+
+		
+<link rel="stylesheet" href="./SW Certificate System_files/introjs.css" type="text/css">
+<script language="Javascript" type="text/javascript" src="./SW Certificate System_files/intro.js.download"></script>
+<script language="Javascript" type="text/javascript" src="./SW Certificate System_files/guide.js.download"></script>
+
+<script type="text/javascript">
+$(document).ready(function ()
+{	 
+	var gmtText = " [GMT ";
+	var timezone = new Date().getTimezoneOffset()*-1/60;
+	if(timezone>0){
+		gmtText += "+";
+	}
+	if(timezone.valueOf()<10){
+		gmtText += "0";
+	}
+	gmtText += timezone+"]";
+	$("#contestTimeSub").append(gmtText);
+});
+
+var usepopup;
+
+function showGuide() {
+	 var rv = -1; // Return value assumes failure.  
+
+ 	 if (navigator.appName == 'Microsoft Internet Explorer') {        
+          var ua = navigator.userAgent;        
+          var re = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");        
+            if (re.exec(ua) != null)            
+               rv = parseFloat(RegExp.$1);    
+             if (rv <= 9){
+         	  // alert("This system supports Internet Explorer 10 or later.");
+         	   bootbox.alert("This system supports Internet Explorer 10 or later.", " ", "5", null, function(result) {
+                	//window.close();
+         			return;
+        		});
+         	   return false; 
+                 }
+          
+      	 } 
+	 if('IT' == 'FT'){
+		 usepopup = true;
+	 } else {
+		 usepopup = false;
+	 }
+	 
+	if (usepopup) {
+		openCenterWScroll('/common/guide/samples/list_sample.jsp?type=' + 'IT' +'&locale=' + 'en' + '&start=true&title=' + title +'&logoMainfileName=' + logoMainfileName,'newCenter','900','600');
+	} else {
+		var elementlist = getList();
+	  	var arr = [];
+	  	
+	  	for (var i=0; i < elementlist.length; i++) {
+	  		var obj = elementlist[i].element;
+	  		if (document.querySelector(obj) != null) {
+	  			if (document.querySelector("#btnf") != null) { //contest화면에서의 처리
+	  				if (obj == "#aside2") {
+	  					continue;
+	  				} else {
+	  					arr.push(elementlist[i]);
+	  				}
+	  			} else { // problem화면에서의 처리
+	  				if (obj == "#icon1" || obj == "#icon2" || obj == "#icon3" || obj == "#num" || obj == "#num0" || obj == "#examtime" || obj == "#examtime" || obj == "#examremaintime" || obj == "#status") {
+	  					continue;
+	  				} else {
+	  					arr.push(elementlist[i]);
+	  				}
+	  			}
+	  		}
+	  	}
+		
+		startGuideIntro(arr);
+	}
+}
+</script>
+
+<!-- left area -->
+
+<script type="text/javascript">
+	function getList() {
+		var elementlist = [
+						{
+						  	element: "#aside2",
+						  	intro: 'Move to "Problem List" screen and click "Manual" at the left corner of the screen to view overall description of the test.' //시험전반에 대한 공통부분의 설명은 “문제목록”화면으로 이동하여왼쪽상단의 “화면안내”를 클릭하면 보실 수 있습니다.
+						},
+						{
+						  	element: "#icon1",
+						  	intro: '"Guide" provides overall information on the test.'  //"시험안내"에서는 SW 역량테스트 제도소개 및 시험에 대한 전반적인 사항을 확인할 수 있습니다.
+						 },
+						 {
+							  	element: "#icon2",
+							  	intro: '"FAQ" listed up frequently asked questions by test-takers (users), regarding how to compile codes and how to submit answers.' //"자주묻는질문" 에서는 컴파일방법, 제출방식 등 응시자가 자주 궁금해 하는 내용을 조회 할 수 있습니다. 
+						 },
+						 {
+							  	element: "#icon3",
+							  	intro: 'Click "Manual" to check detailed information on Problem List and Problem Detail screen.' //"화면안내" 에서는 문제목록 및 문제풀기 화면에 대한 상세 내용을 조회 할 수 있습니다.
+						 },
+						 {
+							  	element: "#num",
+							  	intro: 'Click "Notice" to view test-related information notified to test takers (users). The number presented beside indicates the number of notices unread by a user.' //"공지사항" 을 클릭하면 시험과 관련된 응시자에게 공지한 내용을 조회 할 수 있으며, 옆에 표시되는 숫자는 응시자가 조회하지 않은 공지사항 건수를 의미합니다.
+						 },
+						 {
+							  	element: "#num0",
+							  	intro: 'Click "Q&A" to ask test-related questions and get answers. The number presented here refers to the number of answers from test admin staff unread by a user.' //"질의응답" 을 클릭하면 시험과 관련된 궁금한 사항을 질의하고 답변 받을 수 있으며, 표시되는 숫자는 운영자가 답변한 내용을 응시자가 조회하지 않은 건수를 의미합니다.
+						 },
+						 {
+							  	element: "#examtime",
+							  	intro: 'Test Time shows a total time of the test.' //GMT시간 기준으로 총 검정 시간이 표시됩니다.(서버시간)
+						 },					 
+						{
+						  	element: "#examremaintime",
+						 	intro: '"Remaining Time" means a time remaining until the test ends. Basically, this equally applies to all users, and does not have to do with a user"s individual log-in time. Answers will not be submitted automatically, and it is unable to submit answers after the test ends. Make sure to check Remaining Time and submit answers before the test ends.' //"남은 시간"은 검정이 종료되기까지 남아있는 시간을 의미합니다.  기본적으로 모든 응시자에게 동일하게  적용되며, 응시자 개인의 로그인 시간과는 무관합니다. 개인PC 오류 등이 발생하여 감독관이 추가 시간을 부여하면 추가시간만큼 늘어납니다. 답안은 자동 제출되지 않으며, 시험이 종료된 후에는 답안 제출이 불가합니다. 따라서 남은 시간을 확인해 반드시 종료 전에 답안을 제출하시기 바랍니다.
+						  	
+						},
+						{
+						  	element: "#status",
+						  	intro: '"Status by Problem" demonstrates answer submission status and elapsed time for each problem. Here, elapsed time by problem means the time past after checking the problem before submitting the answer. If a test-taker passes up submitting one problem to solve another problem, the unanswered problem"s elapsed time will continue to run.' //"문제별 상황"에서는 문제별 답안 제출 상태, 경과시간이 표시됩니다. 이때 문제별 경과시간은 문제를 연 후부터 해당 답안을 제출하기 전까지의 시간을 나타낸 것으로, 만약 답안을 제출하지 않고 다른 문제를 풀 경우, 답안을 제출하지 않은 문제의 경과시간은 계속해서 흘러가게 됩니다.
+						},
+						{
+						  	element: "#rank1",
+						  	intro: 'Click "Solve Problem" to move to the problem screen and start test. There are a total of two problems in the test, and problems should be solved in sequence from Problem 1 to Problem 2. ' //"문제풀기" 버튼을 클릭하면 검정문제보기 화면으로 이동하여 시험을 시작합니다. 시험 문제는 총 두 문제이며, 문제1과 문제2의 순서대로 풀어야 합니다
+						},
+						{
+						  	element: "#rank1_origin",
+						  	intro: 'Click "Solve Problem" to move to the problem screen and start test. There are a total of two problems in the test, and problems should be solved in sequence from Problem 1 to Problem 2. <p/><span style="font-size:13px; color: red;">Move to Problem Detail screen and click "Manual" at the top left corner of the screen for more detailed information on Problem Detail screen.</span>' //"문제풀기" 버튼을 클릭하면 검정문제보기 화면으로 이동하여 시험을 시작합니다. 시험 문제는 총 두 문제이며, 문제1과 문제2의 순서대로 풀어야 합니다.\n\n<span style="font-size:13px; color: red;">실제문제를 푸는 "문제보기" 화면에 대한 자세한 설명은 “문제보기” 화면으로 이동한 후 왼쪽상단의 “화면안내”를 클릭하면 보실 수 있습니다.</span>
+						},	
+						{
+						  	element: "#btnf",
+						  	intro: 'Click "End Test" to terminate the test after solving all the problems.' //문제를 다 풀고 난 후 "응시종료" 버튼을 클릭하면 응시가 종료됩니다.
+						},
+						{
+						  	element: "#problem",
+						  	intro: 'This is the text of a problem.' //문제 지문 영역입니다.
+						},
+						{
+						  	element: "#attach_input",
+						  	intro: 'To test source codes created, Sample Input Data will be provided in the bottom.  Sample Input Data should be saved in the folder where sources are saved.' //작성한 소스코드의 테스트를 위해 문제 하단에는 Sample Input Data가 제공됩니다.  Sample Input Data는 소스코드를 저장한 폴더에 저장합니다.
+						},
+						{
+						  	element: "#finish_count",
+						  	intro: 'This is where submission status appears with the time of submission. Click "CODE" to view the source. Answers can be re-submitted a few times, you may find the submission status for up to five lines by clicking "More View".' //제출 현황을 표시하는 부분입니다. 제출시각이 표시되어 있으며, "code"를 클릭하면 제출한 소스를 볼 수 있습니다. 답안은 여러 번 제출할 수 있으므로 "결과 더보기"를 클릭하면 최대 5개까지 최근 제출 결과를 확인할 수 있습니다.
+						},
+						{
+						  	element: "#write_area",
+						  	intro: 'This is where codes are created, and <span style="font-size:14px; color: red;">a basic code template</span> is provided. Select a programming language in the Language menu and write codes. For codes created based on external tools, you may automatically paste them in the code area by using the below file attachment function. You may copy and paste them directly.' //코드 작성 부분이며 <span style="color: red;">기본 코드 템플릿</span>이 제공됩니다. Language 항목에서 검정에 사용할 프로그래밍 언어를 선택한 후 코드를 작성하시면 됩니다.  시험장 PC에서는 Visual Studio 및 Eclipse IDE를 사용할 수 있으며, 이러한 외부 툴을 사용하여 작성한 코드의 경우 아래 파일첨부 기능을 이용하여 코드 영역에 자동으로 붙여 넣기가 가능합니다. 직접 Copy & Paste 기능을 사용하여 코드를 입력하는 것도 가능합니다.
+						},
+						{
+						  	element: "#write_area_origin",
+						  	intro: 'This is where codes are created, and <span style="font-size:13px; color: red;">a basic code template</span> is provided. Select a programming language in the Language menu and write codes. For codes created based on external tools, you may automatically paste them in the code area by using the below file attachment function. You may copy and paste them directly.' //코드 작성 부분이며 <span style="font-size:13px; color: red;">기본 코드 템플릿</span>이 제공됩니다. Language 항목에서 검정에 사용할 프로그래밍 언어를 선택한 후 코드를 작성하시면 됩니다. 외부 툴을 사용하여 작성한 코드의 경우 아래 파일첨부 기능을 이용하여 코드 영역에 자동으로 붙여 넣기가 가능합니다. 직접 Copy & Paste 기능을 사용하여 코드를 입력하는 것도 가능합니다.
+						},
+						{
+						  	element: "#btnf_init",
+						  	intro: 'Once you click "Initialize Source Code," all codes being created will be initialized to the basic template condition.' //"소스코드 초기화" 버튼을 클릭하면 현재 작성 중인 코드가 기본제공 템플릿 상태로 모두 초기화됩니다.
+						},					
+						{
+						  	element: "#btnf_save",
+						  	intro: 'Once you click "Save," all codes being created will be saved in the server.' //"임시저장" 버튼을 클릭하면 작성 중인 코드가 서버에 저장됩니다.
+						},
+						{
+						  	element: "#btnf_compile",
+						  	intro: 'You can compile codes by clicking "Compile."' //"컴파일" 버튼으로 작성한 코드를 컴파일 시킬 수 있습니다.
+						},
+						{
+						  	element: "#btnf_test",
+						  	intro: 'Click "TEST" button or "TEST ▽" in order to show or hide a window to test codes in a server environment.' //"TEST" 버튼 또는 "TEST ▽" 을 클릭하면 입력한 코드로 서버 환경에서 테스트를 할 수 있는 창을 펼침 또는 숨김을 할 수 있습니다.
+						},
+						{
+							element: "#count_close2",
+						  	intro: '"Test" is a screen where users can check input and output in a server on a real time basis. By entering input data to test on an "INPUT" window and clicking RUN below, users can compile and run source codes, and view the result on an "OUTPUT" window. Click "CLEAR" to initialize data on the "INPUT" and "OUTPUT" windows.' //테스트 화면은 서버에서 실시간으로 Input과 Output을 확인할 수 있는 화면입니다. INPUT창에 테스트할 입력 데이터를 입력한 후 하단의 Run 버튼을 클릭하면 소스 코드가 컴파일 및 실행되어 OUTPUT 창에서 그 결과를 확인할 수 있으며 Input 창과 Output 창의 데이터는 Clear 버튼으로 초기화할 수 있습니다.
+						},
+						{
+						  	element: "#btnf_proposal",
+						  	intro: 'Click "Submit" to submit codes, if you have completed writing codes.' //답안 작성이 완료되었다면, "제출" 버튼을 클릭하여 답안을 제출할 수 있습니다.
+						},
+						{
+						  	element: "#btnf_back",
+						  	intro: 'Click "Return to the Problem List" to look at the problem list once again.' //문제 리스트를 다시 조회하려면 "문제 리스트 화면으로 복귀" 버튼을 클릭하면  됩니다
+						}
+	     	          ];
+		return elementlist;
+	}
+
+	 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<!--HTTP 1.1-->
+	
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">
+<!-- 	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>  -->
+	<meta http-equiv="X-UA-Compatible" content="IE=11">
+<script src="./SW Certificate System_files/sha512.js.download"></script>
+<script type="text/javascript">
+	var ws = null;
+	var url = null;
+	var contestId;
+	
+	$(document).ready(function ()
+	{
+		contestId = 'AZLDx4gTEPI8b65q';
+		
+		connect();
+	});
+	
+	function connect() {
+		 var rv = -1; // Return value assumes failure.  
+		
+	        	 if (navigator.appName == 'Microsoft Internet Explorer') {        
+	                 var ua = navigator.userAgent;        
+	                 var re = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");        
+	                 if (re.exec(ua) != null)            
+	                     rv = parseFloat(RegExp.$1);    
+	                   if (rv <= 9){
+	                	   return false;
+	         
+	                        }
+	                }    
+	    	
+		 if (window.location.protocol == 'http:') {
+	         url = 'ws://' + window.location.host + '/common/websocket';
+	     } else {
+	         url = 'wss://' + window.location.host + '/common/websocket';
+	     }
+		
+		 if(ws == null) { //만약 web socket의 객체가 생성이 안되어 있을 경우에만 호출함.
+	    	ws = new WebSocket(url); 
+		 	console.log(ws.url);
+		 }
+	    ws.onopen = function () { // Web Socket이 연결되었을 경우 호출됨.			
+	    	/********** 로컬 스토리지 사용 하는 부분 임시 제거
+	    	//로그인 하고 최초에 한번한 데이터 동기화 함.
+	    	if (getInitLoginValue() == 'Y') {
+		    	//로컬 스토리지의 갯수가 있을 경우에는 
+		    	if (getHistoryList().length > 0) {
+		    		compare();
+		    	} else {
+		    		send();
+		    	}
+		    	
+		    	saveInitLoginValue(getEncUserId(), 'N');
+	    	}
+	    	***********/
+	    	
+	    	//수신하지 못 한 공지사항이 있는지 체크
+	    	var url = contextPath + "/satti/contest/checkNotice.do";
+			$.ajax(
+			{
+				type : "POST",
+				url : url,
+				async: false,
+			});
+			
+			$('#qna').empty();
+	 	    
+	 	    $.ajax({
+	 		    url : contextPath + "/satti/pop_qna_list.do",
+	 		    type : 'POST',
+	 		    async : true,
+	 		    error : function () {
+	 		    	alert("Fail Change Language.");
+	 		    }
+	 		});
+			
+	    }; //close onopen함수
+	    
+	    var qnaCnt = 0;
+	    
+	    ws.onmessage = function (event) { // Web Socket Server에서 message를 send할 경우 호출됨.
+	        //log('Received: ' + event.data);
+	    	var message = JSON.parse(event.data);
+	    	 
+	    	 if(message != null){
+	    		 //받은 메세지가 Notice 일 경우 공지사항 팝업
+	            	if(message.action=="notice"){
+	    				var noticeCnt = message.noticeCnt;
+	    				
+	    				notifyLayer_close();
+	    				
+	    				for(var i = 0; i < noticeCnt; i++){
+	    					var notice = message.messageList[i].messageContent;
+		    				var noticeEn = message.messageList[i].messageContentEn;
+		    				var noticeId = message.messageList[i].noticeId;
+		            	    
+		    				var noticeMsg = "";
+		    				if ('en' == 'ko')
+		    				{
+		    					noticeMsg = notice.replace(" ","&nbsp;");					
+		    				} else {
+		    					noticeMsg = noticeEn.replace(" ","&nbsp;");											
+		    				}
+		    						    				
+		    				var noticeMessage = "<div class=\"notify\" id=\"notify_"+noticeId+"\"><div class=\"notify_txt\"><a href=\"#\" onclick=\"pop_notice_list(); notifyLayer_close(); return false;\"><span class=\"title\">Receive notices</span><span class=\"message\">"+noticeMsg+"</span></a></div><span class=\"btn\"><a href=\"#\" onclick=\"layer_close('notify_"+noticeId+"'); return false; \" ><img src=\"../imgs/btn_close2.png\" alt=\"Close\" /></a></span></div>";
+		    				
+		    				$("#notifyDiv").append(noticeMessage);
+	    				}
+
+	    				if(noticeCnt==null||noticeCnt==0){
+	    					$("#noticeCnt").attr("class","num0");
+	    					$("#noticeCnt").html("0");
+	    					$("#noticeCnt").css("display","none");
+	    				}else{
+	    					$("#noticeCnt").attr("class","num");
+	    					$("#noticeCnt").html(noticeCnt);
+	    					$("#noticeCnt").css("display","inline-block");
+	    				}
+	    				
+	    			//받은 메세지가 Answer 일 경우 답변창 팝업
+	            	}else if(message.action=="qna"){
+	            		/* var spanTag = document.createElement("span");
+			 			spanTag.setAttribute('class', 'point');
+			 			spanTag.innerHTML = "["+getAnswerType(message.answerSelectionValue)+"]";
+			 			
+						var pTag = document.createElement("p");
+						pTag.setAttribute('class', 'label');
+						pTag.innerHTML = spanTag.outerHTML + " " + message.answerMessageContent.replace(/(\r\n|\n|\r)/gm, "<br>");
+						
+						var pTagImg = document.createElement("p");
+						pTagImg.setAttribute('class', 'label_after');
+						
+						var divTag = document.createElement("div");
+						divTag.setAttribute('class', 'answer');
+						divTag.appendChild(pTag);
+						divTag.appendChild(pTagImg);
+						
+						document.getElementById('qna').appendChild(divTag); */
+						
+						if(!toggleOpen) {
+							var noticeMessage = "<div class=\"notify\" name='qnaNoti'><div class=\"notify_txt\"><a href=\"#\" onclick=\"pop_qna(); qnaLayer_close();\"><span class=\"title\">Receive answers</span><span class=\"message\">"+ message.answerMessageContent.replace(/(\r\n|\n|\r)/gm, "<br>") +"</span></a></div><span class=\"btn\"><a href=\"#\" onclick=\"qnaLayer_close();\" ><img src=\"../imgs/btn_close2.png\" alt=\"Close\" /></a></span></div>";
+							
+							$("#notifyDiv").append(noticeMessage);
+							
+							setUnredMsgCnt(message.unredMessageCnt);
+						} else {
+							updateUnredMsg(); // 모지 않는 메시지 모두 본 것으로 업데이트
+							
+							var spanTag = document.createElement("span");
+				 			spanTag.setAttribute('class', 'point');
+				 			spanTag.innerHTML = "["+getAnswerType(message.answerSelectionValue)+"]";
+				 			
+							var pTag = document.createElement("p");
+							pTag.setAttribute('class', 'label');
+							pTag.innerHTML = spanTag.outerHTML + " " + message.answerMessageContent.replace(/(\r\n|\n|\r)/gm, "<br>");
+							
+							var pTagImg = document.createElement("p");
+							pTagImg.setAttribute('class', 'label_after');
+							
+							var divTag = document.createElement("div");
+							divTag.setAttribute('class', 'answer');
+							divTag.appendChild(pTag);
+							divTag.appendChild(pTagImg);
+							
+							document.getElementById('qna').appendChild(divTag);
+						}
+						
+						scrollToLast();
+	            	}else if(message.action=="qnaAll") {
+	            		message.allMessageList.forEach(function(entry) {
+	            			if(entry.messageType=='A') {
+	            				var spanTag = document.createElement("span");
+	    			 			spanTag.setAttribute('class', 'point');
+	    			 			spanTag.innerHTML = "["+getAnswerType(entry.selectionValue)+"]";
+	    			 			
+		            			var pTag = document.createElement("p");
+								pTag.setAttribute('class', 'label');
+								pTag.innerHTML = spanTag.outerHTML + entry.messageContent.replace(/(\r\n|\n|\r)/gm, "<br>");
+		            		   	
+								var pTagImg = document.createElement("p");
+								pTagImg.setAttribute('class', 'label_after');
+								
+		            			var divTag = document.createElement("div");
+								divTag.setAttribute('class', 'answer');
+								divTag.appendChild(pTag);
+								divTag.appendChild(pTagImg);
+		            		} else if(entry.messageType=='Q') {			
+								var spanTag = document.createElement("span");
+					 			spanTag.setAttribute('class', 'point'); 			
+					 			spanTag.innerHTML = "["+getQuestionType(entry.selectionValue)+"]";
+					 						 			
+					 			var pTag = document.createElement("p");
+								pTag.setAttribute('class', 'label');
+								pTag.innerHTML = spanTag.outerHTML + entry.messageContent.replace(/(\r\n|\n|\r)/gm, "<br>");
+
+								var pTagImg = document.createElement("p");
+								pTagImg.setAttribute('class', 'label_after');
+								
+								var divTag = document.createElement("div");
+								divTag.setAttribute('class', 'question');
+								divTag.appendChild(pTag);
+								divTag.appendChild(pTagImg);
+		            		}
+		            				
+		            		document.getElementById('qna').appendChild(divTag);							
+	            		});	            		
+	            		
+	            		message.jsonUnredAnswerList.forEach(function(entry) {
+	            			if(!toggleOpen) {
+	            				var noticeMessage = "<div class=\"notify\" name='qnaNoti'><div class=\"notify_txt\"><a href=\"#\" onclick=\"pop_qna(); qnaLayer_close();\"><span class=\"title\">Receive answers</span><span class=\"message\">"+ entry.messageContent.replace(/(\r\n|\n|\r)/gm, "<br>") +"</span></a></div><span class=\"btn\"><a href=\"#\" onclick=\"qnaLayer_close();\" ><img src=\"../imgs/btn_close2.png\" alt=\"Close\" /></a></span></div>";
+	            				
+	            				$("#notifyDiv").append(noticeMessage);
+								
+								setUnredMsgCnt(message.jsonUnredAnswerListSize);
+							} else {
+								updateUnredMsg(); // 모지 않는 메시지 모두 본 것으로 업데이트
+							}
+	            		});
+	            		
+	            		scrollToLast();
+	            	}else if(message.action=="storage") {
+	            		/********** 로컬 스토리지 사용 하는 부분 임시 제거
+	            		//서버에서 보내온 json의 key값이 'get'이나 'compare'일 때만 실행함.
+		       	    	 if (message.task == "get" || message.task == "compare") {
+		       	    		 var arrMessage = message.historyId;
+		       		 		 setHistoryList(arrMessage);		 		 
+		       	    	  } else if (message.task == 'clear') { //Local Storage의 값 삭제
+		       	    	  		clear(message.encUserId);	    		  
+		       	    	  }	else if (message.task == "login") { //최초로 로그인 되었음을 알림.
+		       	    		  saveInitLoginValue(message.encUserId, message.value);
+		       	    	  } 
+	            		**********/
+	            	}else if(message.action=="compile"){
+	            		
+	            		if(message.result=="noInput"){
+	            			addCompileMsg("No Input",message.compileTime,"W"); // Input Data가 없습니다.
+	            		}else if(message.result=="start"){
+	            			addCompileMsg("Compile Start.",message.compileTime,"S");
+	            		}else if(message.result=="testInputData"){
+	            			addCompileMsg("Test is proceeding with sample input because of no input data",message.compileTime,"W");
+	            		}else if(message.result == "success"){
+			        		var vo = JSON.parse(message.vo);
+				           
+				            // TODO 컴파일 리턴
+				            if(vo.exitValue == "0")
+				            {
+				            	if(message.isCompile == true){
+				            		addCompileMsg("Successfully Compiled.",message.compileTime,"S");
+					            	//$("#output").val("Successfully Compiled."); //성공적으로 컴파일 되었습니다.
+				            		addCompileMsg("Run start.",message.compileTime,"S");
+				            	}
+				            	else{
+				            		hideLoading();
+		                    		wsProcessSubmit(message);
+				            	}
+				                    
+				                return false;
+				            }
+				            else
+				            {
+				           	 	//$("#btnarea").attr("disabled",false);
+				            	//alert(vo.cmpError);
+				                if(vo.exitValue == "H")
+				                {
+				                	addCompileMsg(vo.cmpError,message.compileTime,"E");
+				                	//$('#output').val(vo.cmpError);
+				                }else if(vo.exitValue == "EB"){
+		                    		alert("Your source code  has been exceeded 128KB. You have to write the source code within 128KB.");
+		                    	}else if(vo.exitValue == "NS"){
+				                	var alertMgt ="";
+				                	if(vo.contestTypeCd == 'IG')
+				                	{
+				                		alertMgt = "You can only use standard input/output library \n"; // 표준입출력라이브러리만 사용가능합니다.
+				                	}
+				                	addCompileMsg(alertMgt+"The library used is not allowed. \n>" + vo.cmpError,message.compileTime,"E");
+				                	//$('#output').val(alertMgt+"The library used is not allowed.\n >" + vo.cmpError); // 다음 라인에서 허용하지 않는 라이브러리가 사용되었습니다.
+				                }else if(vo.exitValue == "FI"){
+				                	addCompileMsg("The file input method is used. \n> " + vo.cmpError+"\n(You should just use standard input/output.)",message.compileTime,"E");
+			                    	//$('#output').val("The file input method is used. \n> " + vo.cmpError+"\n(You should just use standard input/output.)");
+													// 다음 라인에서 파일 입력 메소드가 사용되었습니다.  (제출 코드에는 표준 입출력만 사용해야 합니다.)
+			                    }else if(vo.exitValue == "SC"){
+			                    	addCompileMsg("System call function cannot be used. \n> " + vo.cmpError,message.compileTime,"E");
+			  	                	//$('#output').val("System call function cannot be used. \n> " + vo.cmpError);
+		                    	}else if(vo.exitValue == "UPA"){
+		                    		
+		                    		if(vo.langType == "java"){
+		                    			addCompileMsg("The class used is not allowed. \n> " + vo.cmpError,message.compileTime,"E");
+			                    	} else {
+			                    		addCompileMsg("The function used is not allowed. \n> " + vo.cmpError,message.compileTime,"E");
+			                    	}
+		                    		
+			  	                	//$('#output').val("System call function cannot be used. \n> " + vo.cmpError);
+		                    	}else if(vo.exitValue == "UP"){
+			                    	addCompileMsg("Package has been declared in the next line. Package declaration cannot be used. \n> " + vo.cmpError +"\n(Package word cannot be used.)",message.compileTime,"E");
+			  	                	//$('#output').val("System call function cannot be used. \n> " + vo.cmpError);
+		                    	}else{
+		                    		addCompileMsg("Compile Error: \nError Message : \n" + vo.cmpError,message.compileTime,"E");
+				                	//$('#output').val("Compile Error: \nError Message : \n" + vo.cmpError);
+				                					// 컴파일 오류 :
+				                					// 오류 메세지 :
+				                    
+				                }
+				                
+				                hideLoading();
+				                return false;
+				            }
+			        	} else {
+			        		hideLoading();
+			        		//$("#btnarea").attr("disabled",false);
+			        		addCompileMsg("Server Error",message.compileTime,"E");
+			        		//$('#output').val("Server Error");
+			        	}
+	            	}		            
+	            }
+	    	    	 
+	    }; //close onmessage함수
+	    
+	    ws.onclose = function (event) { // 웹소켓 연결이 끊어질 경우 호출됨. java script에서 close함수 호출했을 경우에만 호출됨.
+	    	console.log("WEBSOCKET ONCLOSE");
+	    	console.log("CLOSE CODE: "+event.code);
+
+	    }; //close onclose함수
+	    
+	    ws.onerror = function (error) {
+	    	console.log("WEBSOCKET ONERROR");
+	    	console.log("ERROR DATA: " + error.data);
+	    };
+	} // close connect함수
+	
+	function setUnredMsgCnt(cnt) {
+		if(cnt==0) {
+			$("#qnaCnt").removeClass();
+			$("#qnaCnt").addClass("num0");
+			$("#qnaCnt").html("0");
+			$("#qnaCnt").css("display","none");
+		} else {
+			$("#qnaCnt").removeClass();
+			$("#qnaCnt").addClass("num");
+			$("#qnaCnt").html(cnt);		
+			$("#qnaCnt").css("display","inline-block");					
+		}
+	}
+	
+	function getAnswerType(selectValue) {
+		if(selectValue == 0) {
+			return "Yes";
+		} else if(selectValue == 1) {
+			return "No";
+		} else if(selectValue == 2) {
+			return "Can not provide an answer";
+		} else if(selectValue == 3) {
+			return "Etc.";
+		}
+	}
+	
+	function getQuestionType(selectValue) {
+		if(selectValue == 0) {
+			return "Problem";
+		} else if(selectValue == 1) {
+			return "Operation";
+		} else if(selectValue == 2) {
+			return "System";
+		} else if(selectValue == 3) {
+			return "Etc.";
+		}
+	}
+	
+	function qnaSend(msg) {
+		if (ws != null) {
+	    	var message = {	    		
+	   	        action: "qna",
+	   	        selectValue: document.querySelector('input[name="radio"]:checked').value,
+	   	    	msg: msg,
+	   	        contestId: contestId
+	   	    };	     	
+	    	
+	    	var sendMsg = JSON.stringify(message);
+	    		    	
+	        ws.send(sendMsg);
+	    } else {
+	        alert('connection not established, please connect.');
+	    }
+	}
+	
+	//웹소켓 컴파일 run 후처리
+ 	function wsProcessSubmit(json)
+	{
+ 		var vo = JSON.parse(json.vo);
+ 		
+ 		if(json.cutInput == "Y"){
+	    	addCompileMsg("The Input size is limited within " + json.inputSize +" byte.",json.compileTime,"W");
+	    	addCompileMsg("For reference, Test is proceeding with given sample input without any input data on the INPUT window.",json.compileTime,"W");
+ 			return false;
+ 		}
+ 		
+ 		var failString = "Fail";
+ 		if('IT' == 'IT'){
+	    	failString = "The result using system input is fail.";
+	    } else if ('IT' == 'FT'){
+	    	failString = "Fail";
+	    }
+ 		
+	    if(json.submitFailed != "" && json.submitFailed != null)
+	    {
+	        //submit 불가능한 경우
+	        var submitFailStr = "";
+	        if(json.submitFailed == "ES")
+	        {
+	            submitFailStr = "No more submission chance";
+	            addCompileMsg(submitFailStr,json.compileTime,"E");
+	        }
+	        else if(json.submitFailed == "TU")
+	        {
+	            submitFailStr = "Time is up.";
+	            addCompileMsg(submitFailStr,json.compileTime,"E");
+	            //$('#output').val(submitFailStr); // 시간이 종료되었습니다.
+	        }
+	        else if(json.submitFailed == "AP")
+	        {
+	            submitFailStr = "You've already passed."; 
+	            addCompileMsg(submitFailStr,json.compileTime,"E");
+	            
+	            //$('#output').val(submitFailStr); // 이미 통과하였습니다.
+	        }
+	        return false;
+	    }
+	    
+	    if(vo.runError != "")
+	    {
+	        if(vo.runError.indexOf("Memory Limit Exceeded") != -1 )
+	        {
+	        	if(vo.cutOutput == true){
+			    	addCompileMsg("The Output size is printed out within " + vo.maxOutputSize +" byte.",json.compileTime,"W");
+			    }
+	        	
+	        	if(vo.userResult != null){
+	            	addCompileMsg(vo.userResult,json.compileTime,"P");
+	            }
+	        	addCompileMsg(failString + "<br>Main reason for this error is 'memory limit exceeded'.",json.compileTime,"E");
+	        	//$('#output').val(failString + "\nMain reason for this error is 'memory limit exceeded'.");
+	        	// 오류로 인한 실행 중지(메모리 초과오류 발생일 가능성 높음).
+	        }
+	        else 
+	        {
+	        	
+	        	if(vo.cutOutput == true){
+			    	addCompileMsg("The Output size is printed out within " + vo.maxOutputSize +" byte.",json.compileTime,"W");
+			    }
+	        	
+	        	if(vo.userResult != null){
+	            	addCompileMsg(vo.userResult,json.compileTime,"P");
+	            }
+	        	addCompileMsg(failString + "<br>(Runtime error)\nError Message:<br>" + vo.runError,json.compileTime,"E");
+	        	//$('#output').val(failString + "\n(Runtime error)\nError Message:\n" + vo.runError);
+	        }
+	        return false;
+	    }
+	    
+	    if(vo.runValue != "" || vo.timeOut != "")
+    	{
+	    	if(vo.timeOut != "" && vo.runValue.indexOf("Fail") != -1 
+		    		&& (vo.usrScore == "0" || vo.usrScore == "" || vo.usrScore == "0.0"))
+		    {
+	    		if(vo.cutOutput == true){
+			    	addCompileMsg("The Output size is printed out within " + vo.maxOutputSize +" byte.",json.compileTime,"W");
+			    }
+	    		
+	    		if(vo.userResult != null){
+	            	addCompileMsg(vo.userResult,json.compileTime,"P");
+	            }
+	    		addCompileMsg(failString + "<br>(Time limit exceed.)",json.compileTime,"E");
+	    		//$('#output').val(failString + "\n(Time limit exceed.)");
+	    		return false;
+		    }
+	    	
+	    	if(vo.timeOut != "") {
+	    		
+	    		if(vo.cutOutput == true){
+			    	addCompileMsg("The Output size is printed out within " + vo.maxOutputSize +" byte.",json.compileTime,"W");
+			    }
+	    		
+	    		if(vo.userResult != null){
+	            	addCompileMsg(vo.userResult,json.compileTime,"P");
+	            }
+	    		addCompileMsg("Time limit exceed.",json.compileTime,"E");
+    		}else if(vo.runError != "") {
+    			addCompileMsg("Runtime error! All or some test cases can not be scored.<br>" + "Error Message :<br>"+vo.runError.substring(0,255),json.compileTime,"E");
+    		}else if(vo.runValue.indexOf("Fail") != -1) {
+    			addCompileMsg(failString,json.compileTime,"E");
+    		}
+	    	
+	    	return false;
+    	}
+	    
+	    if(vo.userResult != "" && vo.userResult != null)
+	    {
+	    	if(vo.cutOutput == true){
+		    	addCompileMsg("The Output size is printed out within " + vo.maxOutputSize +" byte.",json.compileTime,"W");
+		    }
+	    	
+	    	addCompileMsg(vo.userResult,json.compileTime,"P");
+	    	//$('#output').val(vo.userResult);
+	    	
+	    	if(vo.langType == "c" || vo.langType == "cpp"){
+		    	addCompileMsg("Run is finished. Run Time : "+vo.executionTime+"s Memory : "+vo.usedMemory+"Kbyte" ,json.compileTime,"S");
+	    	} else {
+		    	addCompileMsg("Run is finished. Run Time : "+vo.executionTime+"s" ,json.compileTime,"S");
+	    	}
+	    	
+	    	return false;
+	    }
+	}
+	
+ 	Date.prototype.format = function(f) {
+ 	    var d = this;
+ 	    var hh = d.getHours().zf(2);
+ 	    var mm = d.getMinutes().zf(2);
+ 	    var ss = d.getSeconds().zf(2);
+ 	     
+ 	    return hh + ":" + mm + ":" + ss;
+ 	};
+ 	 
+ 	String.prototype.string = function(len){var s = '', i = 0; while (i++ < len) { s += this; } return s;};
+ 	String.prototype.zf = function(len){return "0".string(len - this.length) + this;};
+ 	Number.prototype.zf = function(len){return this.toString().zf(len);};
+ 	
+	function addCompileMsg(msg,compileTime,type){
+		var html="";
+		if(type=="S"){
+			var html = "<li class=\"message\"><span class=\"message_ico\">";						
+		}else if(type=="E"){
+			var html = "<li class=\"error_msg\"><span class=\"error_ico\">";
+		}else if(type=="W"){
+			var html = "<li class=\"warning_msg\"><span class=\"warning_ico\">";
+		}else if(type=="P"){
+			var html = "<li class=\"print_msg\"><span class=\"print_ico\">";
+		}
+		
+		
+		if(compileTime!=null){
+			var timezone = (new Date().getTimezoneOffset()-"-3"*-1*60)*-1*60*1000;
+			var time = new Date(compileTime);
+			
+			time.setSeconds(time.getSeconds(), timezone);
+			html+=time.format();
+		}else{
+			html+=new Date().format();
+		}
+		
+		html+="</span><span class=\"text\">"+msg+"</span></li>";
+		$('#output').prepend(html);
+		$('#output').scrollTop(0);
+	}
+	
+	/********** 로컬 스토리지 사용 하는 부분 임시 제거
+	// 웹 소켓으로 서버에 있는 contest history 내역을 조회해서 가져오는 함수. parameter로 contestId를 전송함. 해당 결과 값은 onmessage함수에서 받아옴.
+	function send() {
+	    if (ws != null) {
+	    	var message = {
+	   	        action: "storage",
+	   	        task: "get",
+	   	        contestId: contestId
+	   	    };	     	
+	    	
+	        ws.send(JSON.stringify(message));
+	    } else {
+	        alert('connection not established, please connect.');
+	    }
+	}
+	
+	//웹 소켓으로 로컬에 있는  Contest History 내역을 전송해서 서버에 있는 history내역과 비교하고 그 결과를 onmessage함수에서 받아옴. 
+	function compare() {
+		var historyArray = getHistoryList();
+		//log("value : " + historyArray);
+		if (ws != null) {       		
+			var messageObj = {
+					 action: "storage",
+	        	        task: "compare",
+	           	        contestId: contestId, 
+					historyId : historyArray
+			};
+			
+			var addMsg = JSON.stringify(messageObj);
+			
+			//var cnt = Object.keys(messageObj).length;
+			ws.send(addMsg)
+		} else {
+	        alert('connection not established, please connect.');
+	    }
+	}
+	
+	//Local Storage를 지원하는지 여부 체크하는 기능
+	function supportWebStorage() {
+		var returnVal
+		//if( ('localStorage' in window) && window['localStorage'] !== null) {
+		if(typeof(Storage) !== "undefined") {
+			returnVal = true;
+		}
+		else{
+		    alert("현재 브라우저는 WebStorage를 지원하지 않습니다")
+		    returnVal = false;
+		}
+		
+		return returnVal;
+	}
+	
+	//서버로 부터 가져온 contest history 내역을 local storage에 저장함.
+	function setHistoryList(arrMessage) {
+		//arr[0]["song@samsung.com:AUvibZg_AAUAAAG2:"]["resultScore"]
+		if(supportWebStorage() == true){      		
+			for (var i=0; i < arrMessage.length; i++) {
+		    	for (var key in arrMessage[i]) {
+		    				var value = JSON.stringify(arrMessage[i][key]);
+		    				//log("key : " + key + "   !!!!!!!!!!!!!   " + "value : " + value);
+		    				localStorage.setItem(key, value); //로컬 스토리지에 저장
+	    		}
+		    } 
+		}
+	}
+
+	
+	//로컬 스토리지의 데이터 추출하기
+	function getHistoryList() {
+		var valArray = [];
+		
+		if(supportWebStorage() == true){     
+			for(var i=0, len=localStorage.length; i<len; i++) {
+			    var key = localStorage.key(i);
+			    var sha512Val = getEncUserId();		
+			    var searchWord = sha512Val + ":" + contestId;
+			    if (key.search(searchWord) > -1) {
+			    	var value =  localStorage.getItem(key); //JSON.parse(localStorage.getItem(key)); //로컬 스토리지 데이터 꺼내기
+			    	//log("key : " + key);
+			  		//log("key : " + key + "   !!!!!!!!!!!!!   " + "value : " + value);
+			    	valArray.push(JSON.parse(value));
+			    }
+			}
+		}
+		return valArray;
+	}
+	
+	//로컬 스토리지의 데이터 모두 삭제. 삭제시 로그인한 userId를 key로 가지고 있는 값들만 삭제함.	
+	function clear(encLgnId) {
+		if(supportWebStorage() == true){     
+			//localStorage.clear();			
+			for (var key in localStorage) {
+				if (key != null && key.search(encLgnId) > -1) {
+			    	 localStorage.removeItem(key); //데이터 삭제함.
+			    }
+			}
+		}
+	}
+	
+	// 로그인 후, Local Storage에 'Y'값을 저장. websocket으로 데이터를 동기화 한 후에는 'N'으로 값이 바뀜. 
+    function saveInitLoginValue(userIdVal, val) 
+    {		
+		if(supportWebStorage() == true){     
+			localStorage.setItem(userIdVal, val);
+    	}
+    }
+	
+	//최초 로그인 여부 값을 로컬 스토리지의 값 가져오기
+	function getInitLoginValue() {
+		var strKey = getEncUserId();
+		var resultVal;
+		if(supportWebStorage() == true){     
+			resultVal = localStorage.getItem(strKey);
+		}
+		return resultVal;
+	}
+	
+	//userId를 암호화 하기
+	function getEncUserId() {
+		var lgnId = '6605234';
+		return CryptoJS.SHA512(lgnId);
+	}
+	**********/
+</script> 
+<!--local storage와 연관된 웹 소켓 jsp include -->
+
+		<div id="container">
+
+			<!-- 질의 응답 UI 시작 -->
+			<div class="myDiv">
+				<div class="popup">	
+					<h1 class="no">
+						Q&amp;A
+						<span>
+						
+							2024Year October,
+						
+						
+							28th
+						
+							[Qualification Test] SW Certificate Advanced October 28th 
+						
+
+						
+						</span>
+					</h1>
+					<span class="btnno"><a href="http://105.112.12.30:8080/common/satti/problem.do#" onclick="pop_qna(); return false;"><img src="./SW Certificate System_files/btn_close.png"></a></span>
+	
+					<div id="qna"></div>
+					<!-- //qna -->
+	
+					<div class="submitarea">
+						<dl class="lang">
+							<dt>Please select your question type.</dt>
+							<dd class="gray">
+								<input type="radio" id="g1" name="radio" value="0" checked="checked"> 
+								<label for="g1" class="g1">Problem</label> 
+								<input type="radio" id="g2" name="radio" value="1">
+								<label for="g2" class="g2">Operation</label> 
+								<input type="radio" id="g3" name="radio" value="2">
+								<label for="g3" class="g3">System</label> 
+								<input type="radio" id="g4" name="radio" value="3">
+								<label for="g4" class="g4">Etc.</label>
+							</dd>
+						</dl>
+	
+						    					
+    					
+						<div class="area"><textarea class="textsty text_area" onkeyup="checkByte()"></textarea><a href="http://105.112.12.30:8080/common/satti/problem.do#none" class="btn_submit" onclick="sendQna()">Register</a></div>
+    					
+    
+    					<p class="txt_info">(0/1,000)</p>
+		
+						<dl class="red">
+							<dt>* Please write your question so that it can be answered with yes or no.</dt>
+							<dd>1. Yes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. No&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. Can not provide an answer</dd>
+						</dl>
+					</div>
+					<!-- //submitarea -->	
+				</div>
+			</div>
+			<!-- 질의 응답 UI 종료 -->
+			
+			<h2>2024Year October,
+			
+			
+				28th
+			
+			[Qualification Test] SW Certificate Advanced October 28th 
+			
+
+			
+				<p class="sub_text">
+				
+				</p>
+			
+			</h2>
+			<div class="box_qu2" id="problem">
+				<span class="rank4">Problem1</span>
+				
+				<br>
+				<dl>
+					<dt>Number with No Same Digits 2</dt>
+					
+					
+						<dd><table class="table table-bordered" style="border-image: none 100% / 1 / 0 stretch; width: 740px; border-collapse: collapse;"><tbody><tr><td style="padding-right: 7px; padding-left: 7px; border: 1px solid black; width: 110px; box-sizing: border-box;"><p style="line-height: 1.5;"><font color="#000000" face="굴림체"><span style="font-family: arial; font-size: 10pt;">T<span style="font-size: 10pt;">ime Limit</span></span></font></p></td><td style="padding-right: 7px; padding-left: 7px; border: 1px solid black;"><p style="line-height: 1.5;"><font color="#000000" face="굴림체"><span style="font-family: arial; font-size: 10pt;">Up to </span></font><strong style="font-family: 굴림체; font-size: 13px;"><font color="#009e25"><span style="font-family: arial; font-size: 10pt;">50</span></font><span style="font-family: arial; font-size: 10pt;">&nbsp;</span></strong><font color="#000000" face="굴림체"><span style="font-family: arial; font-size: 10pt;">test inputs must be executed within&nbsp;</span></font><strong style="font-family: 굴림체; font-size: 13px;"><font color="#009e25"><span style="font-family: arial; font-size: 10pt;">1</span></font></strong><font color="#000000" face="굴림체"><span style="font-family: arial; font-size: 10pt;">&nbsp;second using C/C++, or&nbsp;</span></font><strong style="font-family: 굴림체; font-size: 13px;"><font color="#009e25"><span style="font-family: arial; font-size: 10pt;">1.5</span></font></strong><font color="#000000" face="굴림체"><span style="font-family: arial; font-size: 10pt;">&nbsp;seconds using Java</span></font></p></td></tr><tr><td style="padding-right: 7px; padding-left: 7px; border: 1px solid black; width: 110px; box-sizing: border-box;"><p style="line-height: 1.5;"><font color="#000000" face="굴림체"><span style="font-family: arial; font-size: 10pt;">Memory Limit</span></font></p></td><td style="padding-right: 7px; padding-left: 7px; border: 1px solid black;"><p style="line-height: 1.5;"><font face="굴림체"><span style="font-family: arial; font-size: 10pt;"><font color="#000000">Stack :&nbsp;</font></span></font><strong style="font-family: 굴림체; font-size: 13px;"><font color="#0080ff"><span style="font-family: arial; font-size: 10pt;">1</span></font></strong><font face="굴림체"><span style="font-family: arial; font-size: 10pt;"><span style="font-size: 10pt;"><font color="#000000">&nbsp;</font></span><font color="#000000"><span style="font-size: 10pt;">Mbyte&nbsp; /&nbsp;&nbsp;Total :&nbsp;</span></font></span></font><strong style="font-family: 굴림체; font-size: 13px;"><font color="#0080ff"><span style="font-family: arial; font-size: 10pt;">256</span></font></strong><font face="굴림체"><span style="font-family: arial; font-size: 10pt;"><font color="#000000">&nbsp;Mbytes</font></span></font></p></td></tr><tr><td style="padding-right: 7px; padding-left: 7px; border: 1px solid black; width: 110px; box-sizing: border-box;"><p style="line-height: 1.5;"><font color="#000000" face="굴림체"><span style="font-family: arial; font-size: 10pt;">Maximum Number of Submission</span></font></p></td><td style="padding-right: 7px; padding-left: 7px; border: 1px solid black;"><p style="line-height: 1.5;"><font color="#ff0000" face="굴림체"><span style="font-family: arial; font-size: 10pt;"><strong>10<span id="husky_bookmark_start_1632702587589"></span><span id="husky_bookmark_end_1632702587589"></span></strong></span></font><br></p></td></tr><tr><td style="padding-right: 7px; padding-left: 7px; border: 1px solid black; width: 110px; box-sizing: border-box;"><p style="line-height: 1.5;"><font color="#000000" face="굴림체"><span style="font-family: arial; font-size: 10pt;">Code Length Limit</span></font></p></td><td style="padding-right: 7px; padding-left: 7px; border: 1px solid black;"><p style="line-height: 1.5;"><font face="굴림체"><span style="font-family: arial; font-size: 10pt;"><strong><span style="font-size: 10pt;"><font color="#009e25"><span style="font-size: 10pt;">128</span></font></span></strong><font color="#000000"><span style="font-size: 10pt;">&nbsp;Kbytes</span></font></span></font><br></p></td></tr><tr><td style="padding-right: 7px; padding-left: 7px; border: 1px solid black; width: 110px; vertical-align: top; box-sizing: border-box;"><p style="line-height: 1.5;"><font color="#000000" face="굴림체"><span style="font-family: arial; font-size: 10pt;">Evaluation</span></font></p></td><td style="padding-right: 7px; padding-left: 7px; border: 1px solid black;"><p align="left" class="MsoNormal" style="margin: 0cm 0cm 0pt; line-height: 1.5; font-family: arial; font-size: 13.33px;"><span style="font-size: 10pt;"><font color="#000000">When you submit an answer, the result will be shown in real time as below.</font></span></p><p align="left" class="MsoNormal" style="margin: 0cm 0cm 0pt; line-height: 1.5; font-family: arial; font-size: 13.33px;"><font face="맑은 고딕"><strong><span style="color: rgb(0, 117, 200); font-family: arial; font-size: 10pt;">"Pass"</span><span style="font-family: arial; font-size: 10pt;"><font color="#000000">&nbsp;</font></span><font color="#000000"><span style="font-family: arial; font-size: 10pt;">means that the answer is correct for all of the test inputs</span></font></strong></font></p><p align="left" class="MsoNormal" style="margin: 0cm 0cm 0pt; line-height: 1.5; font-family: arial; font-size: 13.33px;"><font face="맑은 고딕" style="color: rgb(0, 0, 0);"><strong><span style="font-family: arial; font-size: 10pt;"></span></strong></font><font face="맑은 고딕"><strong><font style="color: rgb(0, 0, 0);"><span style="font-family: arial; font-size: 10pt;">"<font color="#ff0000">Fail</font>"&nbsp;</span></font><font color="#000000"><span style="font-family: arial; font-size: 10pt;">means that the answer is incorrect for all of part of the test inputs</span></font></strong></font></p><p style="line-height: 1.5;"><font face="맑은 고딕" style="color: rgb(0, 0, 0); font-size: 13.33px;"><span major-latin;="" 10pt;="" 돋움,dotum;="" "맑은="" 고딕";="" black;="" 0pt;="" 10.0pt;="" 함초롬바탕;=""></span></font></p><p align="left" class="MsoNormal" style="margin: 0cm 0cm 0pt; line-height: 1.5;"><span style="font-family: 바탕체; font-size: 10pt;"><font face="맑은 고딕"><font color="#000000"><span major-latin;="" 10pt;="" 돋움,dotum;="" "맑은="" 고딕";="" black;="" 0pt;="" 10.0pt;="" 함초롬바탕;="" style="color: rgb(120, 32, 185); font-family: arial; font-size: 10pt;">※ Test Input : a data which is automatically inputted when submitted code is run in the test system</span></font></font></span></p></td></tr></tbody></table><p><br></p><p style="line-height: 1.5;"><span style="font-family: arial; font-size: 11pt;"><font color="#000000">“Number with No Same Digits” means that the numbers is made up of different digit only.&nbsp;</font></span></p><p style="line-height: 1.5;"><span style="font-family: arial; font-size: 11pt;"><font color="#000000"><br></font></span></p><p style="line-height: 1.5;"><span style="font-family: arial; font-size: 11pt;"><font color="#000000">For example, the number 55 has two digits which are the same (5), but the number 54 has two digits which are different (5 and 4).&nbsp;</font></span></p><p style="line-height: 1.5;"><span style="font-family: arial; font-size: 11pt;"><font color="#000000"><br></font></span></p><p style="line-height: 1.5;"><span style="font-family: arial; font-size: 11pt;"><font color="#000000">When given a number M of length N, find the <b>“Number with No Same Digits” </b>closest to the given M. If there are two, find the smaller number.</font></span></p><p><font color="#000000"><br></font></p><p style="line-height: 1.5;"><span style="font-family: arial; font-size: 11pt;"><font color="#000000"><b>[Constraints]</b></font></span></p><p style="line-height: 1.5;"><font color="#000000"><span style="font-family: arial; font-size: 11pt;">1.</span>&nbsp;<span style="font-family: arial; font-size: 11pt;">N is an integer from 2 to 10.</span></font></p><p style="line-height: 1.5;"><font color="#000000"><span style="font-family: arial; font-size: 11pt;">2.</span>&nbsp;<span style="font-family: arial; font-size: 11pt;">M is an integer from 10 to 9,999,999,999. This may exceed the int (32 bits) range.</span></font></p><p><font color="#000000"><br></font></p><p style="line-height: 1.5;"><span style="font-family: arial; font-size: 11pt;"><font color="#000000"><b>[Input]</b></font></span></p><p style="line-height: 1.5;"><span style="font-family: arial; font-size: 11pt;"><font color="#000000">In the first line, the number of test casts (T) is given, and then T number of test cases will be given. In the first line of each test case, N and M are given between spaces.&nbsp;</font></span></p><p><font color="#000000"><br></font></p><p style="line-height: 1.5;"><span style="font-family: arial; font-size: 11pt;"><font color="#000000"><b>[Output]</b></font></span></p><p style="line-height: 1.5;"><span style="font-family: arial; font-size: 11pt;"><font color="#000000">Standard print the answers of each test case in order. Each test case begins with “#x” (x is a test case number, starts from 1) and (excluding quotation marks) after a space, print the answer</font></span></p><p><font color="#000000"><br></font></p><p style="line-height: 1.5;"><span style="font-family: arial; font-size: 11pt;"><font color="#000000"><b>[Example of Input and Output]</b></font></span></p><p style="line-height: 1.5;"><span style="font-family: arial; font-size: 11pt;"><font color="#000000">(input)<br></font></span><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 11pt;">3<br></span><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 11pt;">2 55<br></span><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 11pt;">3 200<br></span><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 11pt;">5 78599<br></span><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 11pt;"><br>(output)<br></span><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 11pt;">#1 54<br></span><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 11pt;">#2 201<br></span><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 11pt;">#3 78601<br></span><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 11pt;"><br>(Output of sample_input.txt)<br></span><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 11pt;">#1 54<br></span><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 11pt;">#2 201<br></span><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 11pt;">#3 78601<br></span><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 11pt;">#4 329<br></span><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 11pt;">#5 8697<br></span><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 11pt;">#6 94028<br></span><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 11pt;">#7 1504236<br></span><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 11pt;">#8 631402578<br></span><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 11pt;">#9 659438<br></span><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 11pt;">#10 39106<br></span><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 11pt;">#11 2837401569<br></span><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 11pt;">#12 2319876540<br></span><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 11pt;">#13 8139276540<br></span><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 11pt;">#14 1420659873<br></span><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 11pt;">#15 3782569410<br></span><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 11pt;">#16 5498763210<br></span><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 11pt;">#17 3729865410<br></span><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 11pt;">#18 8245013679<br></span><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 11pt;">#19 5160234789<br></span><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 11pt;">#20 9685230147<br><br></span></p></dd>
+					
+					
+				</dl>
+
+				<dl class="lang" id="attach_input">
+					<dt style="font-size: 16px;">Sample Input : </dt>
+					<dd><a href="http://105.112.12.30:8080/common/satti/contestProb/contestProbDown.do?downType=in&amp;contestProbId=AZF9AAlQAmaoBghQ" style="font-size: 16px;color: #394264;font-weight: bold;">sample_input.txt</a></dd>
+					
+				</dl>
+
+<!-- 					<dl class="lang"> -->
+<!-- 						<dt>Sample Output : </dt> -->
+
+<!-- 					</dl> -->
+
+
+				<div class="count" id="finish_count">
+					<ul>
+						
+							<li>Try Count<strong>0</strong>Count</li>
+							<li>Total Count<strong>&nbsp;10</strong>Count</li>
+						
+						
+						<li>							
+							<span id="count_open"><a href="http://105.112.12.30:8080/common/satti/problem.do#" class="btn_more">More View</a></span>
+							<span id="count_close" style="DISPLAY: none"><a href="javascript:Closetop(
+																									0);" class="btn_more2">More View</a></span>
+						</li>
+					</ul>
+					<table>
+						<thead>
+							<tr>
+								<th>Submission Time</th>
+								<th>Solution</th>
+								<th>Result</th>
+							</tr>
+						</thead>
+						<tbody>
+							
+						</tbody>
+					</table>
+				</div>
+				
+			</div>
+
+			<div class="box_qu2" id="textSourceDiv">
+				<div id="write_area_origin">
+				<dl class="lang">
+					<dt>Language</dt>
+					<dd class="gray">
+						
+						<input type="radio" value="C" id="lang1" name="lang" onclick="selectCodeLang(&#39;C&#39;);"><label for="lang1">C(gcc 4.8.2, C11)</label>
+						
+						
+						<input type="radio" value="P" id="lang2" name="lang" onclick="selectCodeLang(&#39;P&#39;);"><label for="lang2">C++(g++ 4.8.2, C++11)</label>
+						
+						
+						<input type="radio" value="J" id="lang3" name="lang" onclick="selectCodeLang(&#39;J&#39;);"><label for="lang3">Java(JDK 1.8.0_121)</label>
+						
+						
+					</dd>
+					<dd><a href="http://105.112.12.30:8080/common/satti/problem.do#" onclick="loadInitCodeLang(); return false;" id="btnf_init" class="btnf test" style="visibility: visible;"><span>Initialize the source code</span></a></dd>
+				</dl>
+
+				<div class="editbox">
+					<div class="webbox" id="webedit" style="visibility: visible;">
+
+
+
+
+
+
+					<div><div class="codemirror-ui-clearfix codemirror-ui-button-frame"><span style="float: left;"><a id="Search" class="mirror_search_off"><p style="z-index: 10" class="hide">Search</p></a></span><span style="float: left;"><a id="Undo" class="mirror_pre"><p style="z-index: 10" class="hide">Undo</p></a></span><span style="float: left;"><a id="Redo" class="mirror_next"><p style="z-index: 10" class="hide">Redo</p></a></span><span style="float: left;"><a id="Fullscreen" class="mirror_full_off"><p style="z-index: 10" class="hide">Fullscreen</p></a></span><span style="float: left;"><a id="Jump to line #" class="mirror_all"><p style="z-index: 10" class="hide">Jump to line #</p></a></span><div class="codemirror-ui-popup-find-wrap"><div class="codemirror-ui-find-bar"><input class="filein" type="text" size="8"><input type="button" class="btnsearch" value="Find"><label title="Case Sensitive"><input type="checkbox" class="codemirror-ui-checkbox">A/a</label><label title="Regular Expressions"><input type="checkbox" class="codemirror-ui-checkbox">RegEx</label><input type="text" class="filein" size="8"><input type="button" class="btnsearch" value="Replace"><label title="Replace All"><input type="checkbox" class="codemirror-ui-checkbox">All</label></div></div></div></div></div>
+					<div class="edit" style="overflow: hidden;">
+						
+									<div class="edit_box">
+										<textarea id="textSource" style="height: 500px; width: 100%; display: none;" name="textSource" class="text_area"></textarea><div class="CodeMirror cm-s-eclipse"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 4.79993px; left: 33.8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; padding: 0px; width: 1000px; height: 1em; outline: none; font-size: 4px;"></textarea></div><div class="CodeMirror-hscrollbar" style="left: 29px;"><div style="height: 1px; width: 0px;"></div></div><div class="CodeMirror-vscrollbar" style="display: block; bottom: 0px;"><div style="width: 1px; height: 628px;"></div></div><div class="CodeMirror-scrollbar-filler"></div><div class="CodeMirror-gutter-filler"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="min-width: 974.963px; margin-left: 29px; min-height: 628px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines"><div style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span class="cm-comment">// Beginning with the SW test, you must directly write your input and output code according to the conditions of each question. </span><span>​</span></pre></div><div style="position: relative; z-index: 1; display: none;"></div><div class="CodeMirror-code" style=""><div class="CodeMirror-activeline" style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">1</div></div><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><pre><span class="cm-comment">////////</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">2</div></div><pre><span class="cm-comment">// You can add and modify values and implementations if needed.</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">3</div></div><pre><span class="cm-comment">// Beginning with the SW test, you must directly write your input and output code according to the conditions of each question. </span></pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">4</div></div><pre><span class="cm-comment">// You must use standard input and output. </span></pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">5</div></div><pre><span class="cm-comment">// You may use necessary freopen syntax provided as below while working on your desktop.  </span></pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">6</div></div><pre><span class="cm-comment">// For input, using scanf is recommended.</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">7</div></div><pre><span class="cm-comment">// e.g.) When N number of int type integers in a row are input (with a space in between)</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">8</div></div><pre><span class="cm-comment">//     for(int i=0; i&lt;N; i++) scanf("%d", &amp;myvalue[i]);</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">9</div></div><pre><span class="cm-comment">////////</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">10</div></div><pre><span class="cm-meta">#include &lt;stdio.h&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">11</div></div><pre>&nbsp;</pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">12</div></div><pre><span class="cm-keyword">int</span> <span class="cm-variable">main</span>() {</pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">13</div></div><pre>&nbsp;</pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">14</div></div><pre><span class="cm-tab">    </span><span class="cm-comment">// freopen function below opens input file in read only mode, and afterward,</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">15</div></div><pre><span class="cm-tab">    </span><span class="cm-comment">// the program will read from input file instead of standard(keyboard) input.</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">16</div></div><pre><span class="cm-tab">    </span><span class="cm-comment">// To test your program, you may save input data in input file,</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">17</div></div><pre><span class="cm-tab">    </span><span class="cm-comment">// and use freopen function to read from the file when using scanf function.</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">18</div></div><pre><span class="cm-tab">    </span><span class="cm-comment">// You may remove the comment symbols(//) in the below statement and use it.</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">19</div></div><pre><span class="cm-tab">    </span><span class="cm-comment">// But before submission, you must remove the freopen function or rewrite comment symbols(//).</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">20</div></div><pre><span class="cm-tab">    </span><span class="cm-comment">//freopen("sample_input.txt", "r", stdin);</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">21</div></div><pre>&nbsp;</pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">22</div></div><pre><span class="cm-tab">    </span><span class="cm-comment">// If you remove the statement below, your program's output may not be recorded</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">23</div></div><pre><span class="cm-tab">    </span><span class="cm-comment">// when your program is aborted due to the time limit.</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">24</div></div><pre><span class="cm-tab">    </span><span class="cm-comment">// For safety, please use setbuf(stdout, NULL); statement.</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">25</div></div><pre><span class="cm-tab">    </span><span class="cm-variable">setbuf</span>(<span class="cm-variable">stdout</span>, <span class="cm-variable">NULL</span>);</pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">26</div></div><pre>    </pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">27</div></div><pre><span class="cm-tab">    </span><span class="cm-comment">//////// Your algorithm is implemented here. ////////</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">28</div></div><pre>    </pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">29</div></div><pre><span class="cm-tab">    </span><span class="cm-keyword">return</span> <span class="cm-number">0</span>;</pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">30</div></div><pre>}</pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">31</div></div><pre>&nbsp;</pre></div></div><div class="CodeMirror-cursor" style="left: 4px; top: 0px; height: 13.6px;">&nbsp;</div><div class="CodeMirror-cursor CodeMirror-secondarycursor" style="display: none;">&nbsp;</div></div></div></div></div><div style="position: absolute; height: 30px; width: 1px; top: 628px;"></div><div class="CodeMirror-gutters" style="height: 628px;"><div class="CodeMirror-gutter CodeMirror-linenumbers" style="width: 28px;"></div></div></div></div>
+									</div>
+								
+					</div>
+				</div>
+				
+				<dl class="filep">
+					<div id="fileDiv">
+        			<dt>Attach file</dt><dd>
+          			<input type="file" name="fileData" id="fileData" style="width:500px" onchange="userAgentCheckReadFile(); return false;" accept=".java,.c,.cpp"></dd>
+          			</div>
+      			</dl>
+      			
+      			<ul class="refer">
+        			<li>* If you upload the source file, the source content is automatically entered. </li>
+					<li>* Attach the document after saving in ANSI type. Characters may not display correctly if not saved in ANSI type.</li>
+        		</ul>
+				</div>
+				<span id="count_open2">
+         			<div class="testarea"><a href="javascript:Openbot();" class="gotest" style="visibility: visible;"><span>TEST</span></a></div>
+         		</span>
+				
+				<span id="count_close2" style="DISPLAY: none">
+         			<div class="testarea2"><a href="javascript:Closebot();" class="gotest2"><span>TEST</span></a></div>
+					<!-- 탭영역 -->
+           				<div class="tab_wrap">
+                			<ul class="tab">
+                    			<li><a id="tab01" href="http://105.112.12.30:8080/common/satti/problem.do#tab_content01" class="on">INPUT</a></li>
+                    			<li><a id="tab02" href="http://105.112.12.30:8080/common/satti/problem.do#tab_content02">OUTPUT</a></li>
+                			</ul>
+                			<div class="tab_content_wrap">
+                    			<div id="tab_content01" class="tab_content" style="">
+                    				<div class="output_wrap">
+                    					<textarea class="textsty text_area" name="inputText" id="input" cols="10" style="font-weight:bold; color:#003399; font-family:monospace;line-height:1.5;" placeholder="Output is printed out on the OUTPUT window when you click RUN button after putting some input data here. 
+TEST function is only for testing, not scoring and not correcting. 
+Test is proceeding with given sample input without any input data on the INPUT window."></textarea>
+                    				</div>
+                    				<a href="http://105.112.12.30:8080/common/satti/problem.do#" onclick="onInputReset(); return false;" class="btn_run">CLEAR</a> 
+                    				<a href="http://105.112.12.30:8080/common/satti/problem.do#" onclick="return onRun(); return false;" class="btn_run">RUN</a>
+                    			</div>
+                    		<div id="tab_content02" class="tab_content" style="display: none;">
+                        		<ul class="output_wrap" id="output" style="font-family:monospace;">
+                        		</ul>
+                        		<a href="http://105.112.12.30:8080/common/satti/problem.do#" onclick="onOutputReset(); return false;" class="btn_run">CLEAR</a> 
+                    			<a href="http://105.112.12.30:8080/common/satti/problem.do#" onclick="return onRun(); return false;" class="btn_run">RUN</a>
+		                    </div>
+		                </div>
+		        	</div>
+            		<!-- //탭영역 -->
+         		</span>
+			</div>
+
+			<div class="box_explain" id="textInfoDiv" style="display: none;">
+				<table class="table_view">
+					<colgroup><col width="100%">
+					<col>
+					</colgroup><tbody><tr>
+						<td style="color: red; font-size: large; padding-left: 10px">
+							※ Select language from the top of screen
+						</td>
+					</tr>
+				</tbody></table>
+			</div>
+			
+			
+
+			<div class="btnarea" id="btnarea">
+				<a href="http://105.112.12.30:8080/common/satti/problem.do#" id="btnf_back" onclick="goContest(); return false;" class="btnf left"><span>Return to the problem list</span></a>
+			    
+			    	
+			   		
+			   			
+					      
+					        
+							  <a href="http://105.112.12.30:8080/common/satti/problem.do#" onclick="return onEditSave();" id="btnf_save" class="btnf" style="visibility: visible;"><span id="btnEditSave">Save</span></a>
+							  <a href="http://105.112.12.30:8080/common/satti/problem.do#" onclick="return onEditCompile();" id="btnf_compile" class="btnf" style="visibility: visible;"><span id="btnEditCompile">Compile</span></a>
+							  <a href="http://105.112.12.30:8080/common/satti/problem.do#" onclick="toggleTest(); return false;" id="btnf_test" class="btnf test" style="visibility: visible;"><span id="btnEditTest">TEST</span></a>
+							  <a href="http://105.112.12.30:8080/common/satti/problem.do#" onclick="return onEditSubmit();" id="btnf_proposal" class="btnf fun1"><span id="btnEditSubmit">Submit</span></a>
+					        
+					      
+					      
+					    
+			   		
+			    
+			</div>
+		</div>
+	</div>
+</form>
+<iframe style="display:none" src="./SW Certificate System_files/saved_resource.html" name="sourceTarget"></iframe>
+
+	<div id="answerLayer" style="display: none ;">
+		<div id="bg" style="background-color: gray; opacity:0.9; position:absolute; width: 100%; height: 100%; top: 0px; left: 0px;z-index: 100;">
+		</div>	
+		<div class="box_survey" id="answerBox" style="position:fixed; left:50%; top:50%; background:#fff; padding:20px; border:4px solid #ddd;min-width: 550px;z-index: 1000;">
+			<ol style="padding-left: 10px; background-image: url(&#39;&#39;); margin-top: 0px">
+				<li style="list-style-type:none;">
+					<h2><p id="contentMessage"></p></h2>
+		   	 	    <textarea id="answerContent" style="width: 100%;" readonly="readonly" class="text_area_readonly"></textarea>
+		    	</li>
+  		    	<div class="center">
+					<a href="http://105.112.12.30:8080/common/satti/problem.do#" onclick="return fn_answerLayerClose();" class="btnf fun1"><span id="btnQSubmit">Close</span></a>
+	    		</div>
+			</ol>
+		</div>
+<!-- 		</div> -->
+	</div>
+
+
+</body></html>

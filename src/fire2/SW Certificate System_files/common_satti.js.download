@@ -1,0 +1,291 @@
+/*contents layout*/
+function setLayout()
+{
+    // gnb
+    var gnbmnu = $(".gnb > li img");
+    if($("body").attr("id") == "sub1")
+    {
+        gnbmnu.eq(0).attr("src", gnbmnu.eq(0).attr("src").replace(".png", "_on.png"));
+    }
+    else if($("body").attr("id") == "sub2")
+    {
+        gnbmnu.eq(1).attr("src", gnbmnu.eq(1).attr("src").replace(".png", "_on.png"));
+    }
+    else if($("body").attr("id") == "sub3")
+    {
+        gnbmnu.eq(2).attr("src", gnbmnu.eq(2).attr("src").replace(".png", "_on.png"));
+    }
+    else
+    {
+        return false;
+    }
+
+    // contents height
+    var maxHeight = $("#contents").height();
+    if($("#submenu").height() > maxHeight)
+    {
+        maxHeight = $("#submenu").height();
+        $("#contents").css(
+        {
+            height : maxHeight
+        });
+    }
+
+    // best of best memberList style
+    $(".memberList > li").each(function()
+    {
+        if($("#mvpList .memberList > li").index($(this)) % 2 == 1)
+        {
+            $(this).addClass("last");
+        }
+        else if($("#committer.memberList > li").index($(this)) % 2 == 1)
+        {
+            $(this).addClass("last");
+        }
+    });
+
+    // board list mouseover
+    $("table.board tbody tr").each(function()
+    {
+        $(this).hover(function()
+        {
+            $(this).addClass("over");
+        }, function()
+        {
+            $(this).removeClass("over");
+        });
+    });
+
+    //source code design
+    $(".depthReply").each(function()
+    {
+        $(this).find("li").filter("[class=depth2]").last().addClass("last");
+    });
+}
+
+/*Img-mouseOver/Out*/
+var imgCurrentOn;
+function setImgOver()
+{
+    // GNB menu
+    $("#header .gnb li > a").hover(imgOver, imgOut);
+    // GNB 기타 menu
+    $("#header .etcmenu li > a").hover(imgOver, imgOut);
+
+    // tab menu
+    $(".tabMenu li > a").hover(imgOver, imgOut);
+    // Mainpage > submenu
+    $(".mainSubmenu li > a").hover(imgOver, imgOut);
+}
+
+function imgOver()
+{
+    imgEl = this.getElementsByTagName("img").item(0);
+    name = imgEl.src;
+    if(name.indexOf("_on.png") <= 0)
+    {
+        imgEl.src = name.replace(".png", "_on.png");
+    }
+    else
+    {
+        imgCurrentOn = imgEl;
+    }
+}
+
+function imgOut()
+{
+    imgEl = this.getElementsByTagName("img").item(0);
+    if(imgCurrentOn != imgEl)
+    {
+        imgEl.src = imgEl.src.replace("_on.png", ".png");
+    }
+}
+
+//select box
+function setSelectBox()
+{
+    $(".selectbox > span").filter('[class=selecttext]').bind("click", function()
+    {
+        if($(this).parent().find("div").hasClass("showMenu"))
+        {
+            $(this).parent().find("div").removeClass("showMenu");
+            $(this).parent().css(
+            {
+                "z-index" : 1
+            });
+            return;
+        }
+        else
+        {
+            $(this).parent().find("li").click(function(event)
+            {
+                $(this).parent().find("li").removeClass("selectMnu");
+                $(this).addClass("selectMnu");
+                $(this).parent().parent().prev().html($(this).text()).next().removeClass("showMenu");
+                $(this).parent().parent().parent().css(
+                {
+                    "z-index" : 1
+                });
+                event.stopImmediatePropagation();
+                return false;
+            });
+            $(this).parent().find("div").addClass("showMenu");
+            $(this).parent().css(
+            {
+                "z-index" : 2
+            });
+        }
+    });
+    $(".selectbox").bind("mouseleave", function()
+    {
+        $(this).find("div").removeClass("showMenu");
+        $(this).css(
+        {
+            "z-index" : 1
+        });
+    });
+}
+
+/**************************************************************************************
+ 함수명 : removeAllHtmlTag(inputStr, retLength)
+ 설 명 : 문자열중에 포함되어 있는 HTML TAG를 없애고 문자만을 주어진 바이트수만큼 추출
+ 인자 : inputStr - 원시 문자열,  retLength - 추출할 바이트 수
+ 리턴 : 바이트 수만큼의 문자열 + '...'
+ 사용예 : onclick="removeAllHtmlTag(inputStr, retLength)", 한글인 경우는 2바이트 확인해줌
+ **************************************************************************************/
+
+function removeAllHtmlTag(inputStr, retLength)
+{
+    var temp = inputStr;
+    var $temp = $(temp);
+    var $srcVal = "";
+    var $cmpStr = new RegExp(/^[0-9]+$/);
+    var $cmpTag = new RegExp(/<[^>]+>/);
+    var $cmpVal = $cmpStr.test(retLength);
+
+    // check up HTML TAG in a input string...
+    if($cmpTag.test(inputStr) != false)
+    {
+        // HTML TAG Remove in HTML String...
+        $srcVal = $temp.text();
+    }
+    else
+    {
+        $srcVal = inputStr;
+    }
+
+    // check up the source string
+    if(inputStr == '')
+    {
+        //alert('주어진 HTML문이 잘못되어 있거나 내용이 없습니다.\n 확인해보시기 바랍니다.');
+
+        return false;
+    }
+
+    var length = parseInt(retLength, 10);
+    var $retVal = $srcVal.cut(length);
+    // Substring as given byte's length...
+    return $retVal;
+    // return value
+};
+
+/**
+ * 문자의 값을 한글과 영문에 따라 해당 바이트 단위로 잘라서 제공
+ * 사용예 : var_name.cut(150);
+ */
+String.prototype.cut = function(len)
+{
+    var str = this;
+    var l = 0;
+    for(var i = 0; i < str.length; i++)
+    {
+        l += (str.charCodeAt(i) > 128)  ? 2  : 1;
+        if(l > len)
+            return str.substring(0, i) + "...";
+    }
+    return str;
+}
+
+$(document).ready(function()
+{
+    // setImgOver();
+    // setLayout();
+    // setSelectBox();
+});
+
+/*화면 가운데 팝업띄우기*/
+function nwin(url, wid, hei, resize)
+{
+    LeftPosition = (screen.width)  ? (screen.width - w) / 2  : 0;
+    TopPosition = (screen.height)  ? (screen.height - h) / 2  : 0;
+    window.open(url, 'newwin', 'width=' + wid + ', height=' + hei + ', resizable=' + resize)
+}
+
+/*layer hide, show*/
+function toggleD(obj)
+{
+    if(obj.style.display == 'none')
+        obj.style.display = '';
+    else
+        obj.style.display = 'none';
+}
+
+//****************************************
+//fix layer
+//****************************************
+if( typeof document.compatMode != 'undefined' && document.compatMode != 'BackCompat')
+{
+    cot_t1_DOCtp = "_top:expression(document.documentElement.scrollTop+document.documentElement.clientHeight-this.clientHeight);_left:expression(document.documentElement.scrollLeft + document.documentElement.clientWidth - offsetWidth);}";
+}
+else
+{
+    cot_t1_DOCtp = "_top:expression(document.body.scrollTop+document.body.clientHeight-this.clientHeight);_left:expression(document.body.scrollLeft + document.body.clientWidth - offsetWidth);}";
+}
+
+var menu_bodyCSS = '* html {background:#fff;}';
+var headerCSS = '#header{position:fixed;';
+var headerCSS = headerCSS + '_position:absolute;';
+var headerCSS = headerCSS + 'z-index:999;';
+var headerCSS = headerCSS + 'width:100%;';
+var headerCSS = headerCSS + 'top:0px;';
+var headerCSS = headerCSS + 'right:0px;';
+var headerCSS = headerCSS + cot_t1_DOCtp;
+document.write('<style type="text/css">' + menu_bodyCSS + headerCSS + '</style>');
+
+var footerCSS = '#footer{position:fixed;';
+var footerCSS = footerCSS + '_position:absolute;';
+var footerCSS = footerCSS + 'z-index:999;';
+var footerCSS = footerCSS + 'width:100%;';
+var footerCSS = footerCSS + 'bottom:0px;';
+var footerCSS = footerCSS + 'right:0px;';
+var footerCSS = footerCSS + cot_t1_DOCtp;
+document.write('<style type="text/css">' + menu_bodyCSS + footerCSS + '</style>');
+
+var menu_bodyCSS = '* html {background:#fff;}';
+var headerCSS = '#aside{position:fixed;';
+var headerCSS = headerCSS + '_position:absolute;';
+var headerCSS = headerCSS + 'z-index:999;';
+var headerCSS = headerCSS + 'height:100%;';
+var headerCSS = headerCSS + 'top:0px;';
+var headerCSS = headerCSS + 'left:0px;';
+var headerCSS = headerCSS + cot_t1_DOCtp;
+document.write('<style type="text/css">' + menu_bodyCSS + headerCSS + '</style>');
+
+//****************************************
+//화면 가운데 팝업띄우기
+//****************************************
+var win = null;
+function openCenterW(mypage,myname,w,h){
+LeftPosition = (screen.width) ? (screen.width-w)/2 : 0;
+TopPosition = (screen.height) ? (screen.height-h)/2 : 0;
+settings = 'height='+h+',width='+w+',top='+TopPosition+',left='+LeftPosition+',toolbar=no,menubar=no,scrollbars=no,resizable=no';
+win = window.open(mypage,myname,settings)
+}
+
+//****************************************
+//Close Window
+//****************************************
+function Close()
+{
+	window.close();
+}
