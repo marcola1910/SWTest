@@ -1,4 +1,4 @@
-package AStartMazeTunnel;
+package AStarMaze.AStartMazeTunnel;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;

@@ -9,9 +9,10 @@
 //     ...
 //     for(int i=0; i<N; i++) myvalue[i] = sc.nextInt();
 ////////
-import java.io.*;
 
-class Solution {
+package familyFun.csolution;
+
+class cSolution {
 	public static void main(String args[]) throws Exception {
     	
 		// The method below means that the program will read from input file, 

@@ -1,4 +1,4 @@
-package AStartMazeTunnel;
+package AStarMaze.AStartMazeTunnel;
 
 import javax.swing.*;
 
