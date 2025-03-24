@@ -1,4 +1,4 @@
-package repeatednumbers.vsolution;
+package example.vsolution;
 
 import java.io.FileInputStream;
 
